@@ -264,6 +264,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5408e34bbae5bc499136b6502e094aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animations: {fileID: 167141597938998903}
+  firstAnimation: Door_Open
+  secondAnimation: Door_Close
 --- !u!1 &7710404267242709259
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +279,7 @@ GameObject:
   - component: {fileID: 7175502735715341560}
   - component: {fileID: 7020528102259541471}
   - component: {fileID: 1264675850049904353}
+  - component: {fileID: 167141597938998903}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -372,6 +376,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!111 &167141597938998903
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7710404267242709259}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 2e9284bf58a9ae342bd7378ea3f2b910, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 2e9284bf58a9ae342bd7378ea3f2b910, type: 2}
+  - {fileID: 7400000, guid: eed4b6749ec21c641b5604308faedcf3, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &7826240400670063338
 GameObject:
   m_ObjectHideFlags: 0

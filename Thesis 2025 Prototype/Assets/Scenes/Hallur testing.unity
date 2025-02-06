@@ -1031,7 +1031,7 @@ PrefabInstance:
     - target: {fileID: 2441673329988441956, guid: 0b86c32e663def0429573b2f40e9e2a8, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 319754748}
+      objectReference: {fileID: 1236253167}
     - target: {fileID: 2441673329988441956, guid: 0b86c32e663def0429573b2f40e9e2a8, type: 3}
       propertyPath: AOESphere
       value: 
@@ -1632,29 +1632,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1172960371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1745674074 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7710404267242709259, guid: 400a2c6b7df10ba41a01fe7d6e356fd6, type: 3}
-  m_PrefabInstance: {fileID: 6862024868266367263}
-  m_PrefabAsset: {fileID: 0}
---- !u!111 &1745674079
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745674074}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: 2e9284bf58a9ae342bd7378ea3f2b910, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 2e9284bf58a9ae342bd7378ea3f2b910, type: 2}
-  - {fileID: 7400000, guid: eed4b6749ec21c641b5604308faedcf3, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!1 &2031966897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,17 +1853,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
-    - target: {fileID: 7954268514787089995, guid: 400a2c6b7df10ba41a01fe7d6e356fd6, type: 3}
-      propertyPath: animations
-      value: 
-      objectReference: {fileID: 1745674079}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7710404267242709259, guid: 400a2c6b7df10ba41a01fe7d6e356fd6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1745674079}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 400a2c6b7df10ba41a01fe7d6e356fd6, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
