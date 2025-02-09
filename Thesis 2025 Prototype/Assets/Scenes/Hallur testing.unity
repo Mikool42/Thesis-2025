@@ -1402,7 +1402,7 @@ Transform:
   m_GameObject: {fileID: 1236253167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.98, y: 2.8, z: 1.37}
+  m_LocalPosition: {x: -9.86, y: 2.8, z: 1.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1689,6 +1689,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlidingDoor (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8978686008767713048, guid: d707e76f64bef0347a33af5bd8e15f14, type: 3}
+      propertyPath: closingForce
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1810,6 +1814,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7758016201000875951, guid: fc25160d344af6945afbe66edce435c5, type: 3}
+      propertyPath: toggleTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7758016201000875951, guid: fc25160d344af6945afbe66edce435c5, type: 3}
       propertyPath: TargetToTrigger
       value: 
