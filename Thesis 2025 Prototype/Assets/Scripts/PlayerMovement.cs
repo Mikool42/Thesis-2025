@@ -55,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnFireStart()
     {
-        Debug.Log("Fire");
         isFiring = true;
         Rigidbody targetRB = target.GetComponent<Rigidbody>();
         if (targetRB != null)
@@ -81,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnAOETrigger()
     {
-        Debug.Log("throw away all objects in spherecollider");
 
         foreach (GameObject go in insideAOERadius)
         {
@@ -136,7 +134,6 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator AOEAnimation()
     {
-        Debug.Log("Animation start");
         float animationTime = AOEAnimationTime;
         Vector3 originalScale = AOESphere.transform.localScale;
 
