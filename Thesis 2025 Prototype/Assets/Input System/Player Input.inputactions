@@ -45,61 +45,6 @@
             "bindings": [
                 {
                     "name": "3D Vector",
-                    "id": "4b365ce2-583a-4085-9372-5ddb595376e7",
-                    "path": "3DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "left",
-                    "id": "f958eb61-4c29-4fc6-af0f-2be643d65b2b",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "4a3c6ea4-ca11-47b0-9e02-a6ef8ba18372",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "forward",
-                    "id": "1a904ee4-c937-45d2-af5b-0ab3c8000864",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "backward",
-                    "id": "38482dcb-88be-4a0e-a5ca-e4b25e8144bc",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "3D Vector",
                     "id": "43137171-7111-4339-ba14-fc203377b4a0",
                     "path": "3DVector",
                     "interactions": "",
@@ -176,15 +121,81 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "3e249dce-e8c7-40d6-973e-156166e33563",
-                    "path": "<Mouse>/leftButton",
+                    "name": "3D Vector",
+                    "id": "63f38118-a9b5-480a-b0eb-3a4132b00e9b",
+                    "path": "3DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "FireStart",
-                    "isComposite": false,
+                    "action": "Move",
+                    "isComposite": true,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "2bead9cf-0730-4818-a87f-2eb37c5da9bc",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "479a62aa-0d2d-4529-9575-6876896f9482",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "441f82ff-b9ce-4d12-8c53-72301b6294eb",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "85646fa8-3426-4477-a39d-936f03c6d789",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "forward",
+                    "id": "36c42e66-b5fd-4c03-85db-894fb551de1a",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "backward",
+                    "id": "3c36e74b-4172-45e2-973a-bd2b01c227e2",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -199,12 +210,12 @@
                 },
                 {
                     "name": "",
-                    "id": "e26bfea6-8c39-421f-b4ed-8587488d4c7a",
+                    "id": "a3bb341b-e30a-4110-a5c0-02a91dfb77b3",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "FireStop",
+                    "action": "FireStart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -221,12 +232,12 @@
                 },
                 {
                     "name": "",
-                    "id": "f6defdc7-69b7-4791-9573-9256d2e5419c",
-                    "path": "<Mouse>/rightButton",
+                    "id": "191e9787-ce1c-42b8-8f82-8697ce399304",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "AOETrigger",
+                    "action": "FireStop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -240,9 +251,48 @@
                     "action": "AOETrigger",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "779104a7-8100-4fd9-98ce-1d0e9f5bee2c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AOETrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Controller",
+            "bindingGroup": "Controller",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Keyboard&Mouse",
+            "bindingGroup": "Keyboard&Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }

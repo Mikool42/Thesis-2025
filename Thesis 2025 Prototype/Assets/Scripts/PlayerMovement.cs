@@ -36,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+
+        GameObject[] tmpObj = GameObject.FindGameObjectsWithTag("MovableObject");
+        target = tmpObj[0];
     }
 
     void Update()
