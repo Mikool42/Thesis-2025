@@ -69,7 +69,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnAOETrigger()
     {
-
+        Debug.Log("in aoe trigger");
+        Debug.Log(insideAOERadius.Count);
         foreach (GameObject go in insideAOERadius)
         {
             Rigidbody targetRB = go.GetComponent<Rigidbody>();
@@ -86,6 +87,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "MovableObject")
         {
             insideAOERadius.Add(other.gameObject);
