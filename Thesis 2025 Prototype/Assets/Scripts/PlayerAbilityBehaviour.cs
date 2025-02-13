@@ -91,6 +91,27 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         isFiring = false;
     }
 
+    public void OnTargetLevelSwitch()
+    {
+        Debug.Log("yes");
+        if (targetAbilityLevel == ForceLevel.L1)
+        {
+            targetAbilityLevel = ForceLevel.L2;
+        }
+        else if (targetAbilityLevel == ForceLevel.L2)
+        {
+            targetAbilityLevel = ForceLevel.L3;
+        }
+        else if (targetAbilityLevel == ForceLevel.L3)
+        {
+            targetAbilityLevel = ForceLevel.L1;
+        }
+        else
+        {
+            targetAbilityLevel = ForceLevel.L1;
+        }
+    }
+
     public void OnAOETrigger()
     {
         if (AOESphere.activeSelf)
@@ -113,6 +134,26 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
         animationCoroutine = AOEAnimation();
         StartCoroutine(animationCoroutine);
+    }
+
+    public void OnAOELevelSwitch()
+    {
+        if (aoeAbilityLevel == ForceLevel.L1)
+        {
+            aoeAbilityLevel = ForceLevel.L2;
+        }
+        else if (aoeAbilityLevel == ForceLevel.L2)
+        {
+            aoeAbilityLevel = ForceLevel.L3;
+        }
+        else if (aoeAbilityLevel == ForceLevel.L3)
+        {
+            aoeAbilityLevel = ForceLevel.L1;
+        }
+        else
+        {
+            aoeAbilityLevel = ForceLevel.L1;
+        }
     }
 
     void OnTriggerEnter(Collider other)
