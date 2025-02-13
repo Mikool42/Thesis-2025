@@ -10,16 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] float controlSpeed = 10f;
 
-    [SerializeField] GameObject target;
-
-    [SerializeField] float forceAmount = 2f;
-    [SerializeField] float AOEForceAmplifier = 2f;
-
-    [SerializeField] ForceTypes forceType = ForceTypes.Force;
-
-    [SerializeField] GameObject AOESphere;
-    [SerializeField] float AOEAnimationTime = 0.5f;
-    [SerializeField] float AOEAnimationTimeStep = 0.01f;
+    [SerializeField] GameObject target = null;
 
     Vector3 movement;
 
@@ -27,75 +18,28 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 moveVector = new Vector3(0,0,0);
 
-    private bool isFiring = false;
-
-    private List<GameObject> insideAOERadius = new List<GameObject>();
-
-    private IEnumerator animationCoroutine;
+    public float moveSpeed;
+    private Vector3 m_Move;
+    private Vector3 m_Rotation;
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
 
-        GameObject[] tmpObj = GameObject.FindGameObjectsWithTag("MovableObject");
+        GameObject[] tmpObj = GameObject.FindGameObjectsWithTag("MovableObject"); // will be replaced with targeting component
         target = tmpObj[0];
     }
 
     void Update()
     {
-        ProcessTranslation();
-        //ApplyMovementforce();
-        if (isFiring && (forceType == ForceTypes.Force))
-        {
-            OnFireStart();
-        }
+        //ProcessTranslation();
+        Move(m_Move);
+        Look(m_Move);
     }
 
     public void OnMove(InputValue value)
     {
-        movement = value.Get<Vector3>();
-    }
-
-    public void OnFireStart()
-    {
-        isFiring = true;
-        Rigidbody targetRB = target.GetComponent<Rigidbody>();
-        if (targetRB != null)
-        {
-            Vector3 forceDir = Vector3.Normalize(target.transform.position - transform.position);
-            Vector3 appliedForce = forceDir * forceAmount;
-            
-            if (forceType == ForceTypes.Force)
-            {
-                targetRB.AddForce(appliedForce, ForceMode.Force);
-            }
-            else if (forceType == ForceTypes.Impulse)
-            {
-                targetRB.AddForce(appliedForce, ForceMode.Impulse);
-            }
-        }
-    }
-
-    public void OnFireStop()
-    {
-        isFiring = false;
-    }
-
-    public void OnAOETrigger()
-    {
-
-        foreach (GameObject go in insideAOERadius)
-        {
-            Rigidbody targetRB = go.GetComponent<Rigidbody>();
-
-            Vector3 forceDir = Vector3.Normalize(go.transform.position - transform.position);
-            Vector3 appliedForce = forceDir * forceAmount * AOEForceAmplifier;
-
-            targetRB.AddForce(appliedForce, ForceMode.Impulse);
-        }
-
-        animationCoroutine = AOEAnimation();
-        StartCoroutine(animationCoroutine);
+        m_Move = value.Get<Vector3>();
     }
 
     private void ProcessTranslation()
@@ -119,40 +63,39 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void OnTriggerEnter(Collider other)
+    private void Move(Vector3 direction)
     {
-        if (other.gameObject.tag == "MovableObject")
-        {
-            insideAOERadius.Add(other.gameObject);
-        }
+        if (direction.sqrMagnitude < 0.01)
+            return;
+        var scaledMoveSpeed = moveSpeed * Time.deltaTime;
+        // For simplicity's sake, we just keep movement in a single plane here. Rotate
+        // direction according to world Y rotation of player.
+        var move = Quaternion.Euler(0, 0, 0) * direction;
+        rb.AddForce(Vector3.Normalize(direction) * scaledMoveSpeed, ForceMode.Impulse);
     }
 
-    void OnTriggerExit(Collider other)
+    private void Look(Vector3 direction)
     {
-        if (other.gameObject.tag == "MovableObject")
-        {
-            insideAOERadius.Remove(other.gameObject);
-        }
+        if (direction.sqrMagnitude < 0.01)
+            return;
+        //var scaledRotateSpeed = rotateSpeed * Time.deltaTime;
+        /*Debug.Log(rotate.x);
+        Debug.Log(rotate.y);
+        Debug.Log(rotate.z);
+        m_Rotation.x = 0;
+        m_Rotation.y = rotate.y;
+        m_Rotation.z = 0;*/
+        //m_Rotation.x = Mathf.Clamp(m_Rotation.x - rotate.y * scaledRotateSpeed, -89, 89);
+        transform.rotation = Quaternion.LookRotation(direction);
     }
 
-    private IEnumerator AOEAnimation()
+    public GameObject GetTarget() // Will be replaced wit ha targetting component
     {
-        float animationTime = AOEAnimationTime;
-        Vector3 originalScale = AOESphere.transform.localScale;
-
-        AOESphere.SetActive(true);
-
-        while (0f < animationTime)
+        if (target == null)
         {
-            animationTime = animationTime - AOEAnimationTimeStep;
-
-            AOESphere.transform.localScale = originalScale * (1 - (animationTime / AOEAnimationTime));
-
-            yield return new WaitForSeconds(AOEAnimationTimeStep);
+            return GameObject.FindGameObjectsWithTag("MovableObject")[0];
         }
-        AOESphere.SetActive(false);
-        yield return null;
+        return target;
     }
-
 
 }
