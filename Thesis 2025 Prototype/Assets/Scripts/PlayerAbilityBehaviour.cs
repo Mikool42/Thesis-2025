@@ -93,10 +93,13 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnAOETrigger()
     {
+        if (AOESphere.activeSelf)
+            return;
+
         float forceAmount = 0f;
-        if (targetAbilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
-        if (targetAbilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
-        if (targetAbilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
+        if (aoeAbilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
+        if (aoeAbilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
+        if (aoeAbilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
 
         foreach (GameObject go in insideAOERadius)
         {
@@ -114,7 +117,6 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "MovableObject")
         {
             insideAOERadius.Add(other.gameObject);

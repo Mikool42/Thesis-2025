@@ -6,7 +6,7 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    [Tooltip("Player movement speed")]
     [SerializeField] float moveSpeed = 5f;
 
     private Rigidbody rb;

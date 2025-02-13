@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAbilityTargeting : MonoBehaviour
 {
-
+    [Tooltip("The Target for the targeted ability")]
     [SerializeField] GameObject target = null;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
