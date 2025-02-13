@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Look(Vector3 direction)
     {
-        if (direction.sqrMagnitude < 0.01)
+        if (direction.sqrMagnitude < 0.1)
             return;
         //var scaledRotateSpeed = rotateSpeed * Time.deltaTime;
         /*Debug.Log(rotate.x);
