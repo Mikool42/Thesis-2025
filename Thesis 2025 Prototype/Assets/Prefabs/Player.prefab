@@ -226,8 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa5701b705ccb534e8378995242a738c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlSpeed: 10
-  target: {fileID: 0}
   moveSpeed: 20
 --- !u!114 &2443004818065182434
 MonoBehaviour:
@@ -241,13 +239,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2e978b0bbde36b45bca04d885fc92f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceAmount: 2
-  AOEForceAmplifier: 2
-  forceType: 0
+  forceAmount_L1: 2
+  forceAmount_L2: 5
+  forceAmount_L3: 10
+  targetAbilityForceType: 0
+  targetAbilityLevel: 0
   AOESphere: {fileID: 3912062960872433173}
+  AOEForceAmplifier: 2
   AOEAnimationTime: 0.5
   AOEAnimationTimeStep: 0.01
-  pm: {fileID: 2441673329988441956}
+  aoeAbilityLevel: 0
+  pat: {fileID: 8827249889790460921}
 --- !u!114 &8827249889790460921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a73745150acb474ab2be1655feb1408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!114 &543815406356559295
 MonoBehaviour:
   m_ObjectHideFlags: 0

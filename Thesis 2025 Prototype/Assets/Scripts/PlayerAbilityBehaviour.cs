@@ -6,30 +6,49 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 {
 
     enum ForceTypes { Force, Impulse };
+    enum ForceLevel { L1, L2, L3 };
 
-    [SerializeField] float forceAmount = 2f;
-    [SerializeField] float AOEForceAmplifier = 2f;
+    [Header("Targeted Ability")]
+    [Tooltip("How much force to use for level one")]
+    [SerializeField] float forceAmount_L1 = 2f;
+    [Tooltip("How much force to use for level two")]
+    [SerializeField] float forceAmount_L2 = 5f;
+    [Tooltip("How much force to use for level three")]
+    [SerializeField] float forceAmount_L3 = 10f;
 
-    [SerializeField] ForceTypes forceType = ForceTypes.Force;
-
-    [SerializeField] GameObject AOESphere;
-    [SerializeField] float AOEAnimationTime = 0.5f;
-    [SerializeField] float AOEAnimationTimeStep = 0.01f;
+    [Tooltip("The type of force to use for targeted ability (Force = gradual force | Impulse = instant force)")]
+    [SerializeField] ForceTypes targetAbilityForceType = ForceTypes.Force;
+    [Tooltip("Indicator for what force level is currently in use")]
+    [SerializeField] ForceLevel targetAbilityLevel = ForceLevel.L1;
 
     private bool isFiring = false;
-
-    private List<GameObject> insideAOERadius = new List<GameObject>();
-
-    private IEnumerator animationCoroutine;
-
     private GameObject abilityTarget = null;
+    
 
-    [SerializeField] PlayerMovement pm;
+    [Header("AOE Ability")]
+    [Tooltip("The GameObject that is animated when AOE is triggered")]
+    [SerializeField] GameObject AOESphere;
+    [Tooltip("The amplifier that indicates how much more force is used in AOE compared to targeted (force used in AOE = force used in targeted * amplifier)")]
+    [SerializeField] float AOEForceAmplifier = 2f;
+    [Tooltip("The time it takes for the animation to run")]
+    [SerializeField] float AOEAnimationTime = 0.5f;
+    [Tooltip("How many 'frames' there are in the animation (smoothness)")]
+    [SerializeField] float AOEAnimationTimeStep = 0.01f;
+
+    [Tooltip("Indicator for what force level is currently in use")]
+    [SerializeField] ForceLevel aoeAbilityLevel = ForceLevel.L1;
+    
+    private List<GameObject> insideAOERadius = new List<GameObject>();
+    private IEnumerator animationCoroutine;
+    
+
+    [Header("Target finding")]
+    [SerializeField] PlayerAbilityTargeting pat;
 
     // Update is called once per frame
     void Update()
     {
-        if (isFiring && (forceType == ForceTypes.Force))
+        if (isFiring && (targetAbilityForceType == ForceTypes.Force))
         {
             OnFireStart();
         }
@@ -39,7 +58,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     {
         isFiring = true;
 
-        abilityTarget = pm.GetTarget(); // Temporary, still need to setup for the targeting
+        abilityTarget = pat.GetTarget(); // Temporary, still need to setup for the targeting
 
         Rigidbody targetRB = null;
         if (abilityTarget != null)
@@ -48,14 +67,19 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         }
         if (targetRB != null)
         {
+            float forceAmount = 0f;
+            if (targetAbilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
+            if (targetAbilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
+            if (targetAbilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
+
             Vector3 forceDir = Vector3.Normalize(abilityTarget.transform.position - transform.position);
             Vector3 appliedForce = forceDir * forceAmount;
 
-            if (forceType == ForceTypes.Force)
+            if (targetAbilityForceType == ForceTypes.Force)
             {
                 targetRB.AddForce(appliedForce, ForceMode.Force);
             }
-            else if (forceType == ForceTypes.Impulse)
+            else if (targetAbilityForceType == ForceTypes.Impulse)
             {
                 targetRB.AddForce(appliedForce, ForceMode.Impulse);
             }
@@ -69,8 +93,11 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnAOETrigger()
     {
-        Debug.Log("in aoe trigger");
-        Debug.Log(insideAOERadius.Count);
+        float forceAmount = 0f;
+        if (targetAbilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
+        if (targetAbilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
+        if (targetAbilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
+
         foreach (GameObject go in insideAOERadius)
         {
             Rigidbody targetRB = go.GetComponent<Rigidbody>();
