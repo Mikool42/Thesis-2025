@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Move(m_Move);
-        //Look(m_Move);
     }
 
     public void OnMove(InputValue value)
@@ -35,27 +34,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         var scaledMoveSpeed = moveSpeed * Time.deltaTime;
         var move = Quaternion.Euler(0, 0, 0) * direction;
-        //rb.AddForce(Vector3.Normalize(direction) * scaledMoveSpeed, ForceMode.Impulse);
 
         rb.Move(transform.position + (Vector3.Normalize(direction) * scaledMoveSpeed), Quaternion.LookRotation(direction, Vector3.up));
-
-
-        //transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
-    }
-
-    private void Look(Vector3 direction)
-    {
-        if (direction.sqrMagnitude < 0.1)
-            return;
-        //var scaledRotateSpeed = rotateSpeed * Time.deltaTime;
-        /*Debug.Log(rotate.x);
-        Debug.Log(rotate.y);
-        Debug.Log(rotate.z);
-        m_Rotation.x = 0;
-        m_Rotation.y = rotate.y;
-        m_Rotation.z = 0;*/
-        //m_Rotation.x = Mathf.Clamp(m_Rotation.x - rotate.y * scaledRotateSpeed, -89, 89);
-        Debug.Log(rb.linearVelocity);
-        
     }
 }
