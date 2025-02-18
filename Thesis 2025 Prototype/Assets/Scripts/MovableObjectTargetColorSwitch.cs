@@ -7,13 +7,24 @@ public class MovableObjectTargetColorSwitch : MonoBehaviour
 
     [Tooltip("When targeted Material")]
     [SerializeField] private Material material2;
+    
+    [Tooltip("MeshRenderer to cahnge color on, if not assigned will use default MeshRenderer")]
+    [SerializeField] MeshRenderer presetMeshRenderer;
 
     private MeshRenderer mr;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        mr = GetComponent<MeshRenderer>();
+        if (presetMeshRenderer != null)
+        {
+            mr = presetMeshRenderer;
+
+        }
+        else
+        {
+            mr = GetComponent<MeshRenderer>();
+        }
         mr.material = material1;
     }
 

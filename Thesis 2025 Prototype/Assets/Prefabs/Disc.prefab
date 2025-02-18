@@ -14,8 +14,6 @@ GameObject:
   - component: {fileID: 368745887489857034}
   - component: {fileID: 8034290192059824382}
   - component: {fileID: 631733473615223838}
-  - component: {fileID: 3918777337515995553}
-  - component: {fileID: 9106974127112250505}
   m_Layer: 0
   m_Name: Disc
   m_TagString: MovableObject
@@ -154,34 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material1: {fileID: 2100000, guid: 9e966f77183138e4da9e5456c16e603a, type: 2}
   material2: {fileID: 2100000, guid: 78642ad5f371fb549b28dd38492f6666, type: 2}
---- !u!114 &3918777337515995553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7365152831889488858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b48da06e4ce04864cb75b382e9ad194a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material1: {fileID: 2100000, guid: 9e966f77183138e4da9e5456c16e603a, type: 2}
-  material2: {fileID: 2100000, guid: 78642ad5f371fb549b28dd38492f6666, type: 2}
---- !u!114 &9106974127112250505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7365152831889488858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b48da06e4ce04864cb75b382e9ad194a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material1: {fileID: 2100000, guid: 9e966f77183138e4da9e5456c16e603a, type: 2}
-  material2: {fileID: 2100000, guid: 78642ad5f371fb549b28dd38492f6666, type: 2}
+  presetMeshRenderer: {fileID: 8835927837941243830}
 --- !u!1 &8364759822410731975
 GameObject:
   m_ObjectHideFlags: 0
