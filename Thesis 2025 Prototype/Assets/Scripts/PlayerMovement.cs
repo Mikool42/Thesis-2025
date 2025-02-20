@@ -58,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         if (FDScript != null && FDScript.GetIsGrounded())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            FDScript.JustJumped();
         }
     }
 }

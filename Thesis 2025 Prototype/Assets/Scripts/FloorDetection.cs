@@ -18,7 +18,7 @@ public class FloorDetection : MonoBehaviour
         Debug.Log(objTag);
     }
     
-    private void OnTriggerExit(Collider other)
+    /*private void OnTriggerExit(Collider other)
     {
         string objTag = other.gameObject.tag;
 
@@ -29,7 +29,9 @@ public class FloorDetection : MonoBehaviour
         }
 
         Debug.Log(objTag);
-    }
+    }*/
 
     public bool GetIsGrounded() { return isGrounded; }
+
+    public void JustJumped() { isGrounded = false; }
 }
