@@ -7,6 +7,11 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     enum ForceTypes { Force, Impulse };
     enum ForceLevel { L1, L2, L3 };
+    public enum AbilityType { PULL, PUSH };
+
+    [Header("Ability General")]
+    [Tooltip("Which ability type")]
+    [SerializeField] AbilityType abilityType = AbilityType.PULL;
 
     [Header("Targeted Ability")]
     [Tooltip("How much force to use for level one")]
@@ -43,7 +48,21 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     
 
     [Header("Target finding")]
+    [Tooltip("Reference to Player ability targeting script")]
     [SerializeField] PlayerAbilityTargeting pat;
+
+    [Header("Player mesh")]
+    [Tooltip("Reference to player mesh")]
+    [SerializeField] MeshRenderer playerMesh;
+    [Tooltip("Player Pull Material")]
+    [SerializeField] private Material pullMaterial;
+    [Tooltip("Player Push Material")]
+    [SerializeField] private Material pushMaterial;
+
+    void Start()
+    {
+        UpdateForceAccordingToAbility();
+    }
 
     // Update is called once per frame
     void Update()
@@ -189,5 +208,36 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         }
         AOESphere.SetActive(false);
         yield return null;
+    }
+
+    public void SetPlayerAbility(AbilityType _abilityType)
+    {
+        abilityType = _abilityType;
+        UpdateForceAccordingToAbility();
+    }
+
+    public AbilityType GetPlayerAbility()
+    {
+        return abilityType;
+    }
+
+    private void UpdateForceAccordingToAbility()
+    {
+        if (abilityType == AbilityType.PULL)
+        {
+            playerMesh.material = pullMaterial;
+
+            forceAmount_L1 = Mathf.Abs(forceAmount_L1) * -1;
+            forceAmount_L2 = Mathf.Abs(forceAmount_L2) * -1;
+            forceAmount_L3 = Mathf.Abs(forceAmount_L3) * -1;
+        }
+        else if (abilityType == AbilityType.PUSH)
+        {
+            playerMesh.material = pushMaterial;
+
+            forceAmount_L1 = Mathf.Abs(forceAmount_L1);
+            forceAmount_L2 = Mathf.Abs(forceAmount_L2);
+            forceAmount_L3 = Mathf.Abs(forceAmount_L3);
+        }
     }
 }

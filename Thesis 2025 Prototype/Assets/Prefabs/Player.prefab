@@ -309,6 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2e978b0bbde36b45bca04d885fc92f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityType: 0
   forceAmount_L1: 2
   forceAmount_L2: 5
   forceAmount_L3: 10
@@ -320,6 +321,9 @@ MonoBehaviour:
   AOEAnimationTimeStep: 0.01
   aoeAbilityLevel: 0
   pat: {fileID: 8827249889790460921}
+  playerMesh: {fileID: 8243907132042594212}
+  pullMaterial: {fileID: 2100000, guid: d0981cdad9a6f03469629ca36bae52b8, type: 2}
+  pushMaterial: {fileID: 2100000, guid: 550618ff4e993af45b540e3ca8d045f6, type: 2}
 --- !u!114 &8827249889790460921
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class PressurePlateController : MonoBehaviour
         if (other.gameObject.tag == TriggerTag)
         {
             buttonAnim.Play("Button_Down");
-            TargetToTrigger.TriggerFirstAnimation();
+            TargetToTrigger.TriggerButtonDown();
         }
     }
 
@@ -38,7 +38,7 @@ public class PressurePlateController : MonoBehaviour
         if (other.gameObject.tag == TriggerTag && !toggleTrigger)
         {
             buttonAnim.Play("Button_Up");
-            TargetToTrigger.TriggerSecondAnimation();
+            TargetToTrigger.TriggerButtonUp();
         }
     }
 }

@@ -15,7 +15,7 @@ public class FloorDetection : MonoBehaviour
             currentGroundObject = other.gameObject;
         }
 
-        Debug.Log(objTag);
+        //Debug.Log(objTag);
     }
     
     /*private void OnTriggerExit(Collider other)
