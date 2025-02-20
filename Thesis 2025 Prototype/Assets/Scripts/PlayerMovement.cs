@@ -6,8 +6,14 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Tooltip("Reference to floor detection script")]
+    [SerializeField] private FloorDetection FDScript;
+
     [Tooltip("Player movement speed")]
     [SerializeField] float moveSpeed = 5f;
+
+    [Tooltip("Jump Force")]
+    [SerializeField] float jumpForce = 5f;
 
     private Rigidbody rb;
     private Vector3 m_Move;
@@ -36,5 +42,13 @@ public class PlayerMovement : MonoBehaviour
         var move = Quaternion.Euler(0, 0, 0) * direction;
 
         rb.Move(transform.position + (Vector3.Normalize(direction) * scaledMoveSpeed), Quaternion.LookRotation(direction, Vector3.up));
+    }
+    
+    public void OnJump()
+    {
+        if (FDScript != null && FDScript.GetIsGrounded())
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 }
