@@ -24,20 +24,15 @@ public class PlayerMovement : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
     }
 
-    void Update()
-    {
-        
-    }
-
     void FixedUpdate()
     {
         Move(m_Move);
 
-        RaycastHit hitInfo;
+        /*RaycastHit hitInfo;
         if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, 10, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
         {
             Debug.DrawRay(transform.position, Vector3.down * hitInfo.distance, Color.yellow);
-        }
+        }*/
     }
 
     public void OnMove(InputValue value)
