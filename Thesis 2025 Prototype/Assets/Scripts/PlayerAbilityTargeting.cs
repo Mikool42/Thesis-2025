@@ -76,6 +76,11 @@ public class PlayerAbilityTargeting : MonoBehaviour
         }
         return target;
     }
+    
+    public float GetTargettingRadius() 
+    {
+        return targettingRadius;
+    }
 
     private IEnumerator CheckObjects(float delay)
     {
