@@ -322,7 +322,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1, z: 0.8}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1098665070960780120
 GameObject:
@@ -445,6 +445,7 @@ GameObject:
   - component: {fileID: 7834275832804895889}
   - component: {fileID: 9213989528706614859}
   - component: {fileID: 5646646335830170664}
+  - component: {fileID: 526050710297771548}
   m_Layer: 0
   m_Name: DoorHandle
   m_TagString: MovableObject
@@ -569,8 +570,23 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 124
+  m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &526050710297771548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100792930186384111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48da06e4ce04864cb75b382e9ad194a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material1: {fileID: 2100000, guid: affa089a53330c545a3c060f640bc3ee, type: 2}
+  material2: {fileID: 2100000, guid: 78642ad5f371fb549b28dd38492f6666, type: 2}
+  presetMeshRenderer: {fileID: 0}
 --- !u!1 &3782604091539467234
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9937443f85b679c41a1173d8bbe7e438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClosingForce: 5
+  closingForce: 5
   DoorBody: {fileID: 5646646335830170664}
 --- !u!1 &4833551885456532335
 GameObject:
