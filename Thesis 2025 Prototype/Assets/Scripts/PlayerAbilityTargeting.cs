@@ -11,6 +11,9 @@ public class PlayerAbilityTargeting : MonoBehaviour
     [Tooltip("The delay for looping through all movable objects and finding which ones are targettable")]
     [SerializeField] float targetFindingDelay = 0.2f;
 
+    [Tooltip("The distance from the player that they can find targets")]
+    [SerializeField] float targettingRadius = 5f;
+
 
     private Camera cam;
 
@@ -27,9 +30,13 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
     public void OnTargetLeft()
     {
-        int indexOfTargetInSortedList = viableTargets.IndexOf(target);
-
         target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+
+        if (viableTargets.Count == 0) {  return; }
+
+        int indexOfTargetInSortedList = viableTargets.IndexOf(target);
+        if (indexOfTargetInSortedList == -1) { indexOfTargetInSortedList = 0; }
+
         if (indexOfTargetInSortedList == 0 )
         {
             target = viableTargets[viableTargets.Count -1]; // if the target is the firstobject set it to the last object
@@ -43,9 +50,13 @@ public class PlayerAbilityTargeting : MonoBehaviour
     
     public void OnTargetRight()
     {
-        int indexOfTargetInSortedList = viableTargets.IndexOf(target);
-
         target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+
+        if (viableTargets.Count == 0) {  return; }
+
+        int indexOfTargetInSortedList = viableTargets.IndexOf(target);
+        if (indexOfTargetInSortedList == -1) { indexOfTargetInSortedList = 0; }
+
         if (indexOfTargetInSortedList == viableTargets.Count - 1)
         {
             target = viableTargets[0]; // if the target is the last object set it to the first object
@@ -78,7 +89,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
             foreach (GameObject movObj in movableObjects)
             {
                 Vector3 viewPos = cam.WorldToViewportPoint(movObj.transform.position);
-                if (viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
+                if (Vector3.Distance(transform.position, movObj.transform.position) <= targettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
                 {
                     viableTargets.Add(movObj);
                 }
