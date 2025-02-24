@@ -26,11 +26,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Move(m_Move);
+        
     }
 
     void FixedUpdate()
     {
+        Move(m_Move);
+
         RaycastHit hitInfo;
         if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, 10, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
         {
@@ -47,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (direction.sqrMagnitude < 0.01)
             return;
-        var scaledMoveSpeed = moveSpeed * Time.deltaTime;
+        var scaledMoveSpeed = moveSpeed * Time.fixedDeltaTime;
         var move = Quaternion.Euler(0, 0, 0) * direction;
 
         rb.Move(transform.position + (Vector3.Normalize(direction) * scaledMoveSpeed), Quaternion.LookRotation(direction, Vector3.up));
