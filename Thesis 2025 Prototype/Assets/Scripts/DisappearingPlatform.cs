@@ -17,13 +17,10 @@ public class DisappearingPlatform : MonoBehaviour
     {
         if (!Disappears || disappearing || collision.isTrigger) { return; }
 
-        Debug.Log("Collided");
-
         string objTag = collision.gameObject.tag;
 
         if (objTag == "Player")
         {
-            Debug.Log("Collided w player");
             disappearing = true;
             StartCoroutine(StartDisappearing(platformDisappearingDuration));
         }
