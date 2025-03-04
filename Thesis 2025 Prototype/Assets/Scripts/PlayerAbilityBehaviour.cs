@@ -6,7 +6,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 {
 
     enum ForceTypes { Force, Impulse };
-    enum ForceLevel { L1, L2, L3 };
+    public enum ForceLevel { L1, L2, L3 };
     public enum AbilityType { PULL, PUSH };
 
     [Header("Ability General")]
@@ -59,9 +59,23 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     [Tooltip("Player Push Material")]
     [SerializeField] private Material pushMaterial;
 
+
+    private PowerHUDScript _powerHUDScript;
+
     void Start()
     {
         UpdateForceAccordingToAbility();
+
+        GameObject _pp = GameObject.Find("PowerPanel");
+        if (_pp != null)
+        {
+            _powerHUDScript = _pp.GetComponent<PowerHUDScript>();
+            _powerHUDScript.ChangeAbilityType(this.gameObject, abilityType);
+        }
+        else
+        {
+            Debug.LogWarning("power HUD Script not found");
+        }
     }
 
     // Update is called once per frame
@@ -112,7 +126,6 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnTargetLevelSwitch()
     {
-        Debug.Log("yes");
         if (targetAbilityLevel == ForceLevel.L1)
         {
             targetAbilityLevel = ForceLevel.L2;
@@ -129,6 +142,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         {
             targetAbilityLevel = ForceLevel.L1;
         }
+
+        _powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, targetAbilityLevel);
     }
 
     public void OnAOETrigger()
@@ -173,6 +188,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         {
             aoeAbilityLevel = ForceLevel.L1;
         }
+
+        _powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, aoeAbilityLevel, true);
     }
 
     void OnTriggerEnter(Collider other)
@@ -213,6 +230,10 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     public void SetPlayerAbility(AbilityType _abilityType)
     {
         abilityType = _abilityType;
+        if (_powerHUDScript != null)
+        {
+            _powerHUDScript.ChangeAbilityType(this.gameObject, abilityType);
+        }
         UpdateForceAccordingToAbility();
     }
 
