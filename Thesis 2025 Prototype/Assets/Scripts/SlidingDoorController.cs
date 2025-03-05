@@ -13,7 +13,6 @@ public class SlidingDoorController : MonoBehaviour
     void Start()
     {
         currentDirectionVector = transform.rotation * _defaultDirectionVector;
-        Debug.Log(currentDirectionVector);
 
         if (Mathf.Abs(currentDirectionVector.x) < Mathf.Abs(currentDirectionVector.z))
         {

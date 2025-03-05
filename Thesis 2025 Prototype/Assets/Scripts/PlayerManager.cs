@@ -83,7 +83,7 @@ public class PlayerManager : MonoBehaviour
 
     private void FindingPowerHUDScript()
     {
-        GameObject _pp = GameObject.Find("PowerPanel");
+        GameObject _pp = GameObject.FindGameObjectWithTag("InGameUI");
         if (_pp != null)
         {
             _powerHUDScript = _pp.GetComponent<PowerHUDScript>();

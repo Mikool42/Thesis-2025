@@ -66,7 +66,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     {
         UpdateForceAccordingToAbility();
 
-        GameObject _pp = GameObject.Find("PowerPanel");
+        GameObject _pp = GameObject.FindGameObjectWithTag("InGameUI");
         if (_pp != null)
         {
             _powerHUDScript = _pp.GetComponent<PowerHUDScript>();

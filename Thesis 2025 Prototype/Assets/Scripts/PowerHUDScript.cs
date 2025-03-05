@@ -179,8 +179,6 @@ public class PowerHUDScript : MonoBehaviour
             Debug.LogWarning("AoeOrSt not set to either -1 of 1");
         }
 
-        Debug.Log(spriteName);
-
         if (playerNr == 1)
         {
             foreach (Sprite sp in p1Sprites)
@@ -188,7 +186,6 @@ public class PowerHUDScript : MonoBehaviour
                 if (sp.name == spriteName)
                 {
                     _image.sprite = sp;
-                    Debug.Log("Image set to " +  spriteName);
                 }
             }
         }
