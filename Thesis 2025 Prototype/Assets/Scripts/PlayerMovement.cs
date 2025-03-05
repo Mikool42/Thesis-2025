@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         var move = Quaternion.Euler(0, 0, 0) * direction;
 
         rb.Move(transform.position + (Vector3.Normalize(direction) * scaledMoveSpeed), Quaternion.LookRotation(direction, Vector3.up));
+        //rb.MovePosition(transform.position + direction * scaledMoveSpeed);
     }
     
     public void OnJump()
