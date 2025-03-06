@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
@@ -54,5 +55,22 @@ public class MenuController : MonoBehaviour
 
             m_State = State.InGame;
         }
+    }
+
+    public void SwitchLevel(int level)
+    {
+        if(level <= 0)
+        {
+            Debug.LogError("Level is 0 or less, not allowed level starts at 1");
+        }
+
+        SceneManager.LoadScene(sceneBuildIndex:level - 1);
+    }
+
+    public void ReloadCurrentScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        Debug.Log(currentSceneName);
+        SceneManager.LoadScene(currentSceneName);
     }
 }

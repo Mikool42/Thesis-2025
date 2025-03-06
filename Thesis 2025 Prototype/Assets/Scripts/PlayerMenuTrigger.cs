@@ -19,6 +19,8 @@ public class PlayerMenuTrigger : MonoBehaviour
 
     public void OnMenuEnter()
     {
+        if (menuController == null) { return; }
+
         menuController.OnMenuToggle();
 
         GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
@@ -36,6 +38,8 @@ public class PlayerMenuTrigger : MonoBehaviour
 
     public void OnMenuExit()
     {
+        if (menuController == null) { return; }
+        
         menuController.OnMenuToggle();
 
         GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
