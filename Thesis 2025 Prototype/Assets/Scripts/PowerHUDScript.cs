@@ -62,6 +62,15 @@ public class PowerHUDScript : MonoBehaviour
             Debug.LogWarning("Player not found error");
         }
 
+        if (P1CurrentAbility == PlayerAbilityBehaviour.AbilityType.PULL)
+        {
+            playerOnePulls = true;
+        }
+        else
+        {
+            playerOnePulls = false;
+        }
+
         UpdateHUD();
     }
 
