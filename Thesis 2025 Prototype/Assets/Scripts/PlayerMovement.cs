@@ -16,12 +16,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce = 5f;
 
     private Rigidbody rb;
+    private PlayerAbilityTargeting pat;
     private Vector3 m_Move;
     private Vector3 m_Rotation;
 
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        pat = gameObject.GetComponent<PlayerAbilityTargeting>();
     }
 
     void FixedUpdate()
@@ -49,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
 
         rb.Move(transform.position + (Vector3.Normalize(direction) * scaledMoveSpeed), Quaternion.LookRotation(direction, Vector3.up));
         //rb.MovePosition(transform.position + direction * scaledMoveSpeed);
+
+        pat.RenderLineOnTarget();
     }
     
     public void OnJump()

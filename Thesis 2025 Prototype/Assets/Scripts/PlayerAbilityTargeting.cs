@@ -16,23 +16,48 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
 
     private Camera cam;
+    private LineRenderer lr;
+
+    private float lineThickness = 1.0f;
+
+    private Vector3 prevTargetPos;
 
     private List<GameObject> viableTargets = new List<GameObject>();
 
     void Start()
     {
         cam = Camera.main;
+        lr = GetComponent<LineRenderer>();
 
         target = GameObject.FindGameObjectsWithTag("MovableObject")[0];
-
+        prevTargetPos = target.transform.position;
+        RenderLineOnTarget();
         StartCoroutine(CheckObjects(targetFindingDelay));
+    }
+
+    void Update()
+    {
+        if (target != null && Vector3.Distance(transform.position, target.transform.position) > targettingRadius)
+            OnTargetRight();
+        
+        if (target != null && (prevTargetPos - target.transform.position).sqrMagnitude < 0.01)
+            return;
+
+        RenderLineOnTarget();
     }
 
     public void OnTargetLeft()
     {
-        target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+        if (target != null)
+        {
+            target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+        }
 
-        if (viableTargets.Count == 0) {  return; }
+        if (viableTargets.Count == 0) 
+        {
+            target = null;
+            return; 
+        }
 
         int indexOfTargetInSortedList = viableTargets.IndexOf(target);
         if (indexOfTargetInSortedList == -1) { indexOfTargetInSortedList = 0; }
@@ -46,13 +71,22 @@ public class PlayerAbilityTargeting : MonoBehaviour
             target = viableTargets[indexOfTargetInSortedList - 1]; // set the target as the next target below
         }
         target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true);
+
+        RenderLineOnTarget();
     }
     
     public void OnTargetRight()
     {
-        target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+        if (target != null)
+        {
+            target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+        }
 
-        if (viableTargets.Count == 0) {  return; }
+        if (viableTargets.Count == 0)
+        {
+            target = null;
+            return;
+        }
 
         int indexOfTargetInSortedList = viableTargets.IndexOf(target);
         if (indexOfTargetInSortedList == -1) { indexOfTargetInSortedList = 0; }
@@ -66,14 +100,38 @@ public class PlayerAbilityTargeting : MonoBehaviour
             target = viableTargets[indexOfTargetInSortedList + 1]; // set the target as the next target above
         }
         target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true);
+
+        RenderLineOnTarget();
+    }
+
+    public void RenderLineOnTarget()
+    {
+        if (target == null)
+        {
+            lr.enabled = false;
+            return;
+        }
+
+        lr.enabled = true;
+        var points = new Vector3[2];
+        points[0] = transform.position;
+        points[1] = target.transform.position;
+        lr.SetPositions(points);
+        ChangeLineThickness(lineThickness);
+    }
+
+    public void ChangeLineThickness(float thickness)
+    {
+        lineThickness = thickness;
+
+        if (lr == null) { return; }
+
+        lr.startWidth = lineThickness;
+        lr.endWidth = lineThickness;
     }
 
     public GameObject GetTarget() 
     {
-        if (target == null)
-        {
-            return GameObject.FindGameObjectsWithTag("MovableObject")[0];
-        }
         return target;
     }
     
@@ -110,26 +168,4 @@ public class PlayerAbilityTargeting : MonoBehaviour
         sortedList = unsortedList.OrderBy(_object => _object.transform.position.x).ToList();
         return sortedList;
     }
-
-
-    /// <summary>
-    /// ///////////////////delete this when done only ussed to debug
-    /// </summary>
-    /// <param name="list"></param>
-    private void PrintNamesOfObjectsInList(List<GameObject> list)
-    {
-        foreach (GameObject obj in list)
-        {
-            Debug.Log(obj.name);
-        }
-    }
-    
-    private void PrintXPosOfObjectsInList(List<GameObject> list)
-    {
-        foreach (GameObject obj in list)
-        {
-            Debug.Log(obj.transform.position.x);
-        }
-    }
-    /////////////////////////////////////////
 }

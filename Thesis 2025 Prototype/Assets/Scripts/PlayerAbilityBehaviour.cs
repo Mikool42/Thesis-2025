@@ -65,6 +65,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     void Start()
     {
         UpdateForceAccordingToAbility();
+        pat.ChangeLineThickness(0.3f);
 
         GameObject _pp = GameObject.FindGameObjectWithTag("InGameUI");
         if (_pp != null)
@@ -129,18 +130,22 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         if (targetAbilityLevel == ForceLevel.L1)
         {
             targetAbilityLevel = ForceLevel.L2;
+            pat.ChangeLineThickness(0.6f);
         }
         else if (targetAbilityLevel == ForceLevel.L2)
         {
             targetAbilityLevel = ForceLevel.L3;
+            pat.ChangeLineThickness(1.0f);
         }
         else if (targetAbilityLevel == ForceLevel.L3)
         {
             targetAbilityLevel = ForceLevel.L1;
+            pat.ChangeLineThickness(0.3f);
         }
         else
         {
             targetAbilityLevel = ForceLevel.L1;
+            pat.ChangeLineThickness(0.3f);
         }
 
         _powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, targetAbilityLevel);

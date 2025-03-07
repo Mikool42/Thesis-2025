@@ -17,7 +17,5 @@ public class CameraPlayerTarget : MonoBehaviour
             targetGroup.AddMember(_player.transform, 1, 1);
         }
 
-        Debug.Log(players.Length);
-
     }
 }
