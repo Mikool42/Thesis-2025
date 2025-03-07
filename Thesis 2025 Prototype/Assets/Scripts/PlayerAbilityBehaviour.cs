@@ -28,7 +28,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     private bool isFiring = false;
     private GameObject abilityTarget = null;
-    
+
 
     [Header("AOE Ability")]
     [Tooltip("The GameObject that is animated when AOE is triggered")]
@@ -39,11 +39,14 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     [SerializeField] float AOEAnimationTime = 0.5f;
     [Tooltip("How many 'frames' there are in the animation (smoothness)")]
     [SerializeField] float AOEAnimationTimeStep = 0.01f;
+    [Tooltip("The Radius of the AOE Ability")]
+    [SerializeField] float AOERadius = 8.0f;
 
     [Tooltip("Indicator for what force level is currently in use")]
     [SerializeField] ForceLevel aoeAbilityLevel = ForceLevel.L1;
     
-    private List<GameObject> insideAOERadius = new List<GameObject>();
+    //
+    //private List<GameObject> insideAOERadius = new List<GameObject>();
     private IEnumerator animationCoroutine;
     
 
@@ -92,13 +95,20 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     {
         isFiring = true;
 
-        abilityTarget = pat.GetTarget(); // Temporary, still need to setup for the targeting
+        abilityTarget = pat.GetTarget();
 
         Rigidbody targetRB = null;
         if (abilityTarget != null)
         {
+            if (abilityTarget.GetComponent<TurnOffDiscMovement>() != null &&
+            !abilityTarget.GetComponent<TurnOffDiscMovement>().canMove)
+            {
+                return;
+            }
+
             targetRB = abilityTarget.GetComponent<Rigidbody>();
         }
+
         if (targetRB != null)
         {
             float forceAmount = 0f;
@@ -156,16 +166,22 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         if (AOESphere.activeSelf)
             return;
 
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, AOERadius);
+        Debug.Log(hitColliders.Length);
+
         float forceAmount = 0f;
         if (aoeAbilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
         if (aoeAbilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
         if (aoeAbilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
 
-        foreach (GameObject go in insideAOERadius)
+        foreach (Collider col in hitColliders)
         {
-            Rigidbody targetRB = go.GetComponent<Rigidbody>();
+            Debug.Log(col.gameObject.name);
+            if (col.gameObject.tag != "MovableObject") continue;
 
-            Vector3 forceDir = Vector3.Normalize(go.transform.position - transform.position);
+            Rigidbody targetRB = col.gameObject.GetComponent<Rigidbody>();
+
+            Vector3 forceDir = Vector3.Normalize(col.transform.position - transform.position);
             Vector3 appliedForce = forceDir * forceAmount * AOEForceAmplifier;
 
             targetRB.AddForce(appliedForce, ForceMode.Impulse);
@@ -197,7 +213,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         _powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, aoeAbilityLevel, true);
     }
 
-    void OnTriggerEnter(Collider other)
+    /*void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "MovableObject")
         {
@@ -211,7 +227,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         {
             insideAOERadius.Remove(other.gameObject);
         }
-    }
+    }*/
 
     private IEnumerator AOEAnimation()
     {

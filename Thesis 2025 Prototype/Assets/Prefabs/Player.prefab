@@ -321,6 +321,7 @@ MonoBehaviour:
   AOEForceAmplifier: 2
   AOEAnimationTime: 0.5
   AOEAnimationTimeStep: 0.01
+  AOERadius: 8
   aoeAbilityLevel: 0
   pat: {fileID: 8827249889790460921}
   playerMesh: {fileID: 8243907132042594212}
@@ -477,7 +478,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
