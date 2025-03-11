@@ -5,7 +5,6 @@ public class EndBButton : MonoBehaviour
 {
     public void OnEndButtonPress()
     {
-        StopAllCoroutines();
         Debug.Log("end");
         //Application.Quit();
     #if UNITY_EDITOR
