@@ -29,9 +29,11 @@ public class SlidingDoorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         DoorBody.AddForce(currentDirectionVector * closingForce, ForceMode.Force);
+    }
 
-
+    public Vector3 GetCurrentDirection()
+    {
+        return currentDirectionVector;
     }
 }
