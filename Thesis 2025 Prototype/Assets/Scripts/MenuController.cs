@@ -64,7 +64,7 @@ public class MenuController : MonoBehaviour
             Debug.LogError("Level is 0 or less, not allowed level starts at 1");
         }
 
-        SceneManager.LoadScene(sceneBuildIndex:level - 1);
+        SceneManager.LoadScene(sceneBuildIndex:level);
     }
 
     public void ReloadCurrentScene()
