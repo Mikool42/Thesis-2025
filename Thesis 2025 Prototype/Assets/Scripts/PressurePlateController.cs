@@ -10,6 +10,9 @@ public class PressurePlateController : MonoBehaviour
 
     [SerializeField] bool toggleTrigger = false;
 
+    private bool hasBeenToggled = false;
+    private bool canBePressed = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,10 +29,11 @@ public class PressurePlateController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == TriggerTag)
+        if (other.gameObject.tag == TriggerTag && canBePressed && !hasBeenToggled)
         {
             buttonAnim.Play("Button_Down");
             TargetToTrigger.TriggerButtonDown();
+            hasBeenToggled = true;
         }
     }
 
@@ -39,6 +43,23 @@ public class PressurePlateController : MonoBehaviour
         {
             buttonAnim.Play("Button_Up");
             TargetToTrigger.TriggerButtonUp();
+            hasBeenToggled = false;
         }
+    }
+
+    public void UnToggle()
+    {
+        buttonAnim.Play("Button_Up");
+        hasBeenToggled = false;
+    }
+
+    public void Lock()
+    {
+        canBePressed = false;
+    }
+
+    public void Unlock()
+    {
+        canBePressed = true;
     }
 }
