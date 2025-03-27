@@ -28,7 +28,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        lr = GetComponent<LineRenderer>();
+        //lr = GetComponent<LineRenderer>();
+        lr.enabled = false;
 
         target = GameObject.FindGameObjectsWithTag("MovableObject")[0];
         prevTargetPos = target.transform.position;
