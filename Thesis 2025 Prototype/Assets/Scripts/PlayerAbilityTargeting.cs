@@ -25,14 +25,18 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
     private List<GameObject> viableTargets = new List<GameObject>();
 
+    private PlayerAbilityBehaviour pab;
+
     void Start()
     {
         cam = Camera.main;
+        pab = GetComponent<PlayerAbilityBehaviour>();
+
         //lr = GetComponent<LineRenderer>();
         lr.enabled = false;
 
-        target = GameObject.FindGameObjectsWithTag("MovableObject")[0];
-        prevTargetPos = target.transform.position;
+        //target = GameObject.FindGameObjectsWithTag("MovableObject")[0];
+        //prevTargetPos = target.transform.position;
         RenderLineOnTarget();
         StartCoroutine(CheckObjects(targetFindingDelay));
     }
@@ -40,8 +44,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
     void Update()
     {
         if (target != null && Vector3.Distance(transform.position, target.transform.position) > targettingRadius)
-            OnTargetRight();
-        
+            OnTargetOutOfRange();
+
         if (target != null && (prevTargetPos - target.transform.position).sqrMagnitude < 0.01)
             return;
 
@@ -104,6 +108,16 @@ public class PlayerAbilityTargeting : MonoBehaviour
         target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true);
 
         RenderLineOnTarget();
+    }
+
+    private void OnTargetOutOfRange()
+    {
+        if (target != null)
+        {
+            target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+        }
+
+        target = null;
     }
 
     public void RenderLineOnTarget()
