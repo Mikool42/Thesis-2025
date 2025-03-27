@@ -14,9 +14,10 @@ public class PlayerAbilityTargeting : MonoBehaviour
     [Tooltip("The distance from the player that they can find targets")]
     [SerializeField] float targettingRadius = 5f;
 
+    [Tooltip("The reference for the lazer lines line renderer")]
+    [SerializeField] private LineRenderer lr;
 
     private Camera cam;
-    private LineRenderer lr;
 
     private float lineThickness = 1.0f;
 
