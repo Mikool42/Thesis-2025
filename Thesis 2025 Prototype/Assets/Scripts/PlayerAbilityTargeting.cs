@@ -56,7 +56,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
     {
         if (target != null)
         {
-            target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+            target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false, pab.GetPlayerAbility());
         }
 
         if (viableTargets.Count == 0) 
@@ -76,7 +76,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
         {
             target = viableTargets[indexOfTargetInSortedList - 1]; // set the target as the next target below
         }
-        target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true);
+        target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true, pab.GetPlayerAbility());
 
         RenderLineOnTarget();
     }
@@ -85,7 +85,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
     {
         if (target != null)
         {
-            target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+            target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false, pab.GetPlayerAbility());
         }
 
         if (viableTargets.Count == 0)
@@ -105,7 +105,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
         {
             target = viableTargets[indexOfTargetInSortedList + 1]; // set the target as the next target above
         }
-        target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true);
+        target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true, pab.GetPlayerAbility());
 
         RenderLineOnTarget();
     }
@@ -114,7 +114,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
     {
         if (target != null)
         {
-            target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false);
+            target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false, pab.GetPlayerAbility());
         }
 
         target = null;

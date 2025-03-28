@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MovableObjectTargetColorSwitch : MonoBehaviour
 {
-    [Tooltip("Default Material")]
+    [Tooltip("Default Movable Object Material Material")]
     [SerializeField] private Material material1;
 
     [Tooltip("When targeted Material")]
@@ -19,7 +19,6 @@ public class MovableObjectTargetColorSwitch : MonoBehaviour
         if (presetMeshRenderer != null)
         {
             mr = presetMeshRenderer;
-
         }
         else
         {
@@ -28,15 +27,27 @@ public class MovableObjectTargetColorSwitch : MonoBehaviour
         mr.material = material1;
     }
 
-    public void SetAsTarget(bool isTarget)
+    public void SetAsTarget(bool isTarget, PlayerAbilityBehaviour.AbilityType abilityType)
     {
         if (isTarget)
         {
-            mr.material = material2;
+            SetMaterialBool(abilityType, 1);
         }
         else
         {
-            mr.material = material1;
+            SetMaterialBool(abilityType, 0);
+        }
+    }
+
+    private void SetMaterialBool(PlayerAbilityBehaviour.AbilityType abilityType, int _bool) //false = 0, true = 1
+    {
+        if (abilityType == PlayerAbilityBehaviour.AbilityType.PUSH)
+        {
+            mr.material.SetInt("_PushTargeting", _bool);
+        }
+        else if (abilityType == PlayerAbilityBehaviour.AbilityType.PULL)
+        {
+            mr.material.SetInt("_PullTargeting", _bool);
         }
     }
 }
