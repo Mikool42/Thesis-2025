@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Jump Force")]
     [SerializeField] float jumpForce = 5f;
 
+    [Tooltip("ShadowObject")]
+    [SerializeField] GameObject shadow;
+
     private Rigidbody rb;
     private PlayerAbilityTargeting pat;
     private Vector3 m_Move;
@@ -30,11 +33,12 @@ public class PlayerMovement : MonoBehaviour
     {
         Move(m_Move);
 
-        /*RaycastHit hitInfo;
-        if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, 10, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore))
+        RaycastHit hitInfo;
+        if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, 10, /*LayerMask.GetMask("Ground")*/ ~0, QueryTriggerInteraction.Ignore))
         {
             Debug.DrawRay(transform.position, Vector3.down * hitInfo.distance, Color.yellow);
-        }*/
+            shadow.transform.position = hitInfo.point;
+        }
     }
 
     public void OnMove(InputValue value)
