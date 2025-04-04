@@ -6,8 +6,8 @@ public class MovableObjectTargetColorSwitch : MonoBehaviour
     [SerializeField] private Material material1;
 
     [Tooltip("Outline material if applicable")]
-    [SerializeField] private Material outline;
-    [SerializeField] private bool hasOutline = false;
+    /*[SerializeField]*/ private Material outline;
+    /*[SerializeField]*/ private bool hasOutline = false; // Add again if we decide to use the outline stuff
     
     [Tooltip("MeshRenderer to cahnge color on, if not assigned will use default MeshRenderer")]
     [SerializeField] MeshRenderer presetMeshRenderer;
