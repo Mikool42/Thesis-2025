@@ -14,6 +14,9 @@ public class PlayerAbilityTargeting : MonoBehaviour
     [Tooltip("The distance from the player that they can find targets")]
     [SerializeField] float targettingRadius = 5f;
 
+    [Tooltip("The minnimum distance from the player that they can find targets")]
+    [SerializeField] float minTargettingRadius = 1f;
+
     [Tooltip("The reference for the lazer lines line renderer")]
     [SerializeField] private LineRenderer lr;
 
@@ -43,8 +46,15 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
     void Update()
     {
-        if (target != null && Vector3.Distance(transform.position, target.transform.position) > targettingRadius)
-            OnTargetOutOfRange();
+
+        if (target != null)
+        {
+            float _dist = Vector3.Distance(transform.position, target.transform.position);
+            if (_dist > targettingRadius || _dist < minTargettingRadius)
+            {
+                OnTargetOutOfRange();
+            }
+        }
 
         if (target != null && (prevTargetPos - target.transform.position).sqrMagnitude < 0.01)
             return;
@@ -168,7 +178,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
             foreach (GameObject movObj in movableObjects)
             {
                 Vector3 viewPos = cam.WorldToViewportPoint(movObj.transform.position);
-                if (Vector3.Distance(transform.position, movObj.transform.position) <= targettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
+                float dist = Vector3.Distance(transform.position, movObj.transform.position);
+                if (dist <= targettingRadius && dist >= minTargettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
                 {
                     viableTargets.Add(movObj);
                 }
