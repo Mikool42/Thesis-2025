@@ -44,6 +44,7 @@ public class PlayerManager : MonoBehaviour
     public void SwitchPlayerAbility()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Debug.Log("in player Ability switch");
 
         if (players.Length == 1)
         {
