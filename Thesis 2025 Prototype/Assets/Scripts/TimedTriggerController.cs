@@ -31,45 +31,65 @@ public class TimedTriggerController : MonoBehaviour
 
     private int gameobjectIndex = 0;
 
+    private List<GameObject> pressedPressurePlates;
+    private Coroutine TimerCoroutine;
+
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        pressurePlates[0].GetComponentInChildren<PressurePlateController>().Unlock();
+        //pressurePlates[0].GetComponentInChildren<PressurePlateController>().Unlock();
 
-        for (int i = 1; i < pressurePlates.Length; i++)
+        for (int i = 0; i < pressurePlates.Length; i++)
         {
-            pressurePlates[i].GetComponentInChildren<PressurePlateController>().Lock();
+            pressurePlates[i].GetComponentInChildren<PressurePlateController>().Unlock();
         }
+
+        pressedPressurePlates = new List<GameObject>();
     }
 
     public void Trigger(GameObject triggerObject)
     {
-        if (pressurePlates[gameobjectIndex] == triggerObject)
+
+        if (pressedPressurePlates.Count == 0)
         {
-            if (gameobjectIndex == 0)
-            {
-                //first pressure plate pressed
+            // first pressure plate pressed
+            TimerCoroutine = StartCoroutine(TriggerTimer());
+            pressedPressurePlates.Add(triggerObject);
+        }
 
-            }
+        if (!pressedPressurePlates.Contains(triggerObject))
+        {
+            pressedPressurePlates.Add(triggerObject);
+        }
 
-            if (gameobjectIndex == pressurePlates.Length - 1)
-            {
-                // last pressure plate pressed
-                gameobjectIndex++; //Just to stop the last coroutine
-                StopBlinking();
-                TargetToTrigger.TriggerButtonDown();
-                return;
-            }
-
-            gameobjectIndex++;
-            StartCoroutine(TriggerTimer(gameobjectIndex - 1));
+        if (pressedPressurePlates.Count == pressurePlates.Length)
+        {
+            // last pressure plate pressed
+            StopBlinking();
+            StopCoroutine(TimerCoroutine);
+            TargetToTrigger.TriggerButtonDown();
+            return;
         }
     }
 
-    private IEnumerator TriggerTimer(int _index)
+    private IEnumerator TriggerTimer()
+    {
+        float _timer = timer;
+        StartBlinking(timer);
+        while (0f < _timer)
+        {
+            _timer = _timer - Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        ResetPressurePlates();
+        yield return null;
+    }
+
+    // Not in use anymore
+    private IEnumerator __TriggerTimer(int _index)
     {
         float _timer = timer;
         StopBlinking();
@@ -92,16 +112,15 @@ public class TimedTriggerController : MonoBehaviour
 
     private void ResetPressurePlates()
     {
+        pressedPressurePlates.Clear();
+
         StopBlinking();
 
         foreach (GameObject pp in pressurePlates)
         {
             pp.GetComponentInChildren<PressurePlateController>().UnToggle();
-            pp.GetComponentInChildren<PressurePlateController>().Lock();
+            //pp.GetComponentInChildren<PressurePlateController>().Lock();
         }
-        pressurePlates[0].GetComponentInChildren<PressurePlateController>().Unlock();
-        
-        gameobjectIndex = 0;
     }
 
     public void StartBlinking(float totalBlinkTime)
