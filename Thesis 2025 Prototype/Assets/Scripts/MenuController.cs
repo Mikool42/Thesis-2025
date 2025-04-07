@@ -19,7 +19,7 @@ public class MenuController : MonoBehaviour
     public void OnEnable()
     {
         // By default, hide menu and show game UI.
-        inGameUI.SetActive(true);
+        inGameUI.SetActive(false);
         mainMenuUI.SetActive(false);
 
         m_State = State.InGame;
@@ -28,7 +28,6 @@ public class MenuController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -50,7 +49,7 @@ public class MenuController : MonoBehaviour
         else if (m_State == State.InMenu)
         {
             Debug.Log("in menu exit in controller");
-            inGameUI.SetActive(true);
+            //inGameUI.SetActive(true);
             mainMenuUI.SetActive(false);
 
             m_State = State.InGame;

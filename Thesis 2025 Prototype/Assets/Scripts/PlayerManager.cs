@@ -7,32 +7,32 @@ public class PlayerManager : MonoBehaviour
 
     public void OnPlayerJoined()
     {
-        FindingPowerHUDScript();
+        //FindingPowerHUDScript();
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         if (players.Length == 1)
         {
-            _powerHUDScript.AddPlayerToHud(players[0]);
+            //_powerHUDScript.AddPlayerToHud(players[0]);
 
             players[0].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PUSH);
-            _powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PUSH);
+            //_powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PUSH);
 
         }
         else if (players.Length == 2)
         {
-            _powerHUDScript.AddPlayerToHud(players[0]);
-            _powerHUDScript.AddPlayerToHud(players[1]);
+            //_powerHUDScript.AddPlayerToHud(players[0]);
+            //_powerHUDScript.AddPlayerToHud(players[1]);
 
             if (players[0].GetComponent<PlayerAbilityBehaviour>().GetPlayerAbility() == PlayerAbilityBehaviour.AbilityType.PUSH)
             {
                 players[1].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PULL);
-                _powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PULL);
+                //_powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PULL);
             }
             else
             {
                 players[1].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PUSH);
-                _powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PUSH);
+                //_powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PUSH);
             }
         }
         else
@@ -50,12 +50,12 @@ public class PlayerManager : MonoBehaviour
             if (players[0].GetComponent<PlayerAbilityBehaviour>().GetPlayerAbility() == PlayerAbilityBehaviour.AbilityType.PUSH)
             {
                 players[0].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PULL);
-                _powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PULL);
+                //_powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PULL);
             }
             else
             {
                 players[0].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PUSH);
-                _powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PUSH);
+                //_powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PUSH);
             }
         }
         else if (players.Length == 2)
@@ -64,15 +64,15 @@ public class PlayerManager : MonoBehaviour
             {
                 players[0].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PULL);
                 players[1].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PUSH);
-                _powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PULL);
-                _powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PUSH);
+                //_powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PULL);
+                //_powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PUSH);
             }
             else
             {
                 players[0].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PUSH);
                 players[1].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PULL);
-                _powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PUSH);
-                _powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PULL);
+                //_powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PUSH);
+                //_powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PULL);
             }
         }
         else

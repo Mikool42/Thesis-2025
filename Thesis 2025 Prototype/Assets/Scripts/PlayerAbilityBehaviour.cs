@@ -70,7 +70,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         UpdateForceAccordingToAbility();
         pat.ChangeLineThickness(0.3f);
 
-        GameObject _pp = GameObject.FindGameObjectWithTag("InGameUI");
+        /*GameObject _pp = GameObject.FindGameObjectWithTag("InGameUI");
         if (_pp != null)
         {
             _powerHUDScript = _pp.GetComponent<PowerHUDScript>();
@@ -79,7 +79,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         else
         {
             Debug.LogWarning("power HUD Script not found");
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -158,7 +158,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
             pat.ChangeLineThickness(0.3f);
         }
 
-        _powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, targetAbilityLevel);
+        //_powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, targetAbilityLevel);
     }
 
     public void OnAOETrigger()
