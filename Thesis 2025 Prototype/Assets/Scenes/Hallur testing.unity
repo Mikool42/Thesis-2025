@@ -917,119 +917,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1172960371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &926778162
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 926778163}
-  - component: {fileID: 926778165}
-  - component: {fileID: 926778164}
-  m_Layer: 0
-  m_Name: TriggerCollector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &926778163
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 926778162}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1133358300}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &926778164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 926778162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5408e34bbae5bc499136b6502e094aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1
-  animations: {fileID: 0}
-  firstAnimation: 
-  secondAnimation: 
-  firstScriptFunction:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 926778165}
-        m_TargetAssemblyTypeName: TriggerCollector, Assembly-CSharp
-        m_MethodName: AddTrigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  secondScriptFunction:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 926778165}
-        m_TargetAssemblyTypeName: TriggerCollector, Assembly-CSharp
-        m_MethodName: RemoveTrigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &926778165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 926778162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9975afb532c0f3438e0620a5c76b0fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfTriggers: 2
-  unityEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2076078706}
-        m_TargetAssemblyTypeName: AutomaticTrigger, Assembly-CSharp
-        m_MethodName: TriggerButtonDown
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  currentNumberOfTriggers: 0
---- !u!4 &1133358300 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4894716406329289131, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-  m_PrefabInstance: {fileID: 806375981594629841}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1147101816
 GameObject:
   m_ObjectHideFlags: 0
@@ -2183,17 +2070,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1172960371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2076078706 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2867599706309335289, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-  m_PrefabInstance: {fileID: 806375981594629841}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5408e34bbae5bc499136b6502e094aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &806375981594629841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2206,42 +2082,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AbilityChangePrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 2079053506640290356, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-      propertyPath: TargetToTrigger
-      value: 
-      objectReference: {fileID: 926778164}
-    - target: {fileID: 2867599706309335289, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-      propertyPath: firstScriptFunction.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2867599706309335289, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-      propertyPath: firstScriptFunction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2867599706309335289, guid: a99478da76cf2664da1fb779c3556390, type: 3}
       propertyPath: firstScriptFunction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1858420873}
-    - target: {fileID: 2867599706309335289, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-      propertyPath: firstScriptFunction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2867599706309335289, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-      propertyPath: firstScriptFunction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SwitchPlayerAbility
-      objectReference: {fileID: 0}
-    - target: {fileID: 2867599706309335289, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-      propertyPath: firstScriptFunction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2867599706309335289, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-      propertyPath: firstScriptFunction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 3553919949704641936, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-      propertyPath: TargetToTrigger
-      value: 
-      objectReference: {fileID: 926778164}
     - target: {fileID: 4894716406329289131, guid: a99478da76cf2664da1fb779c3556390, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.06
@@ -2284,10 +2128,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4894716406329289131, guid: a99478da76cf2664da1fb779c3556390, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 926778163}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a99478da76cf2664da1fb779c3556390, type: 3}
 --- !u!1001 &2368387348130486934
