@@ -38,6 +38,15 @@
                     "id": "fc64e4fa-3e90-4e39-8c36-405f0ceee0da",
                     "expectedControlType": "",
                     "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "AOEStop",
+                    "type": "Button",
+                    "id": "a5867340-5aa6-4a3d-aa8f-97209019d258",
+                    "expectedControlType": "",
+                    "processors": "",
                     "interactions": "Press(behavior=1)",
                     "initialStateCheck": true
                 },
@@ -314,6 +323,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "AOETrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "950ffb07-a31d-4954-89b5-2c0570fc94c1",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AOEStop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df1cdbe4-0b83-4f88-bd19-103f985b3ff6",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AOEStop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

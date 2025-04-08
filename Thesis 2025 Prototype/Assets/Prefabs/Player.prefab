@@ -249,6 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8834899179816890121}
   - component: {fileID: 2441673329988441956}
+  - component: {fileID: 8747379267106803925}
   - component: {fileID: 8827249889790460921}
   - component: {fileID: 7804458033350431323}
   - component: {fileID: 543815406356559295}
@@ -282,6 +283,7 @@ Transform:
   - {fileID: 3570651359265954054}
   - {fileID: 680832786500613957}
   - {fileID: 8930499790804894915}
+  - {fileID: 546370684557300159}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2441673329988441956
@@ -300,6 +302,30 @@ MonoBehaviour:
   moveSpeed: 7
   jumpForce: 8
   shadow: {fileID: 8983122223382380391}
+--- !u!114 &8747379267106803925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7555090383640608989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00e8fd9678cb4144699e5ded26e50f4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityType: 0
+  forceAmount_L1: 20
+  forceType_L1: 0
+  forceAmount_L2: 20
+  forceType_L2: 0
+  forceAmount_L3: 20
+  forceType_L3: 1
+  AOEForceAmplifier: 2
+  pat: {fileID: 8827249889790460921}
+  playerMesh: {fileID: 8243907132042594212}
+  pullMaterial: {fileID: 2100000, guid: d0981cdad9a6f03469629ca36bae52b8, type: 2}
+  pushMaterial: {fileID: 2100000, guid: 550618ff4e993af45b540e3ca8d045f6, type: 2}
 --- !u!114 &8827249889790460921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +343,8 @@ MonoBehaviour:
   targettingRadius: 15
   minTargettingRadius: 1
   lr: {fileID: 2976026571193287356}
+  AOELazerPrefab: {fileID: 2407371899753758261, guid: 316ca96233b4fb8448c9386983a1ac07, type: 3}
+  aoeLazerContainer: {fileID: 9144849600455837028}
 --- !u!114 &7804458033350431323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,6 +620,37 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &9144849600455837028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 546370684557300159}
+  m_Layer: 0
+  m_Name: AoeLazerContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &546370684557300159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9144849600455837028}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8834899179816890121}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6899978139224504136
 PrefabInstance:
   m_ObjectHideFlags: 0

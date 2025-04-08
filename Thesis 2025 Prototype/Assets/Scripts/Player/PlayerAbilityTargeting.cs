@@ -20,6 +20,15 @@ public class PlayerAbilityTargeting : MonoBehaviour
     [Tooltip("The reference for the lazer lines line renderer")]
     [SerializeField] private LineRenderer lr;
 
+    [Tooltip("The line prefab to be used for AOE targets")]
+    [SerializeField] private GameObject AOELazerPrefab;
+
+    [Tooltip("The reference for the AOE lazer container object")]
+    [SerializeField] private GameObject aoeLazerContainer;
+
+    private List<GameObject> aoeLazers = new List<GameObject>();
+    private List<GameObject> aoeLazersActive = new List<GameObject>();
+
     private Camera cam;
 
     private float lineThickness = 1.0f;
@@ -40,6 +49,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
         //target = GameObject.FindGameObjectsWithTag("MovableObject")[0];
         //prevTargetPos = target.transform.position;
+        InstantiateAoeLazers();
         RenderLineOnTarget();
         StartCoroutine(CheckObjects(targetFindingDelay));
     }
@@ -60,6 +70,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
             return;
 
         RenderLineOnTarget();
+        AddLinesToAOETargets();
     }
 
     public void OnTargetLeft()
@@ -152,7 +163,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
         if (lr == null) { return; }
 
-        lr.startWidth = lineThickness;
+        lr.startWidth = 0.2f;
         lr.endWidth = lineThickness;
     }
 
@@ -186,6 +197,61 @@ public class PlayerAbilityTargeting : MonoBehaviour
             }
 
             viableTargets = SortByPosX(viableTargets);
+        }
+    }
+
+    private void AddLinesToAOETargets()
+    {
+        // Clear out and disable the active lazers
+        for (int i = 0; i < aoeLazersActive.Count; i++)
+        {
+            aoeLazersActive[i].GetComponent<LineRenderer>().enabled = false;
+        }
+        aoeLazersActive.Clear();
+
+        // Only add lazers on the aoe targets and not the main one
+        List<GameObject> targetsMinusMainTarget = new List<GameObject>(viableTargets);
+        if (viableTargets.Contains(target))
+        {
+            targetsMinusMainTarget.Remove(target);
+        }
+
+        // Activate the lazers, aim them and add them to the active list
+        for (int i = 0; i < aoeLazers.Count; i++)
+        {
+            if (i >= targetsMinusMainTarget.Count) return;
+
+            GameObject _target = aoeLazers[i];
+            aoeLazersActive.Add(_target);
+
+            LineRenderer _targetLR = _target.GetComponent<LineRenderer>();
+            _targetLR.enabled = true;
+
+            var points = new Vector3[2];
+            points[0] = transform.position;
+            points[1] = targetsMinusMainTarget[i].transform.position;
+            _targetLR.SetPositions(points);
+
+            _targetLR.startWidth = 0.2f;
+            _targetLR.endWidth = lineThickness;
+        }
+        
+
+    }
+
+    public List<GameObject> GetAoeTargetsList()
+    {
+        return viableTargets;
+    }
+
+    private void InstantiateAoeLazers()
+    {
+        for (int i = 0; i < 10;i++)
+        {
+            GameObject newLazer = Instantiate(AOELazerPrefab);
+            newLazer.transform.parent = aoeLazerContainer.transform;
+            newLazer.GetComponent<LineRenderer>().enabled = false;
+            aoeLazers.Add(newLazer);
         }
     }
 

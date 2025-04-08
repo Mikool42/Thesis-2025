@@ -19,10 +19,10 @@ public class PlayerAbilityBehaviourOld : MonoBehaviour
     [Tooltip("How much force to use for level three")]
     [SerializeField] float forceAmount_L3 = 10f;
 
-    [Tooltip("The type of force to use for targeted ability (Force = gradual force | Impulse = instant force)")]
-    [SerializeField] ForceTypes targetAbilityForceType = ForceTypes.Force;
-    [Tooltip("Indicator for what force level is currently in use")]
-    [SerializeField] PlayerAbilityBehaviour.ForceLevel targetAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L1;
+    //[Tooltip("The type of force to use for targeted ability (Force = gradual force | Impulse = instant force)")]
+    private ForceTypes targetAbilityForceType = ForceTypes.Force;
+    //[Tooltip("Indicator for what force level is currently in use")]
+    private PlayerAbilityBehaviour.ForceLevel targetAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L1;
 
     private bool isFiring = false;
     private GameObject abilityTarget = null;

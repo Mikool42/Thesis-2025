@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerAbilityBehaviour : MonoBehaviour
 {
 
-    enum ForceTypes { Force, Impulse };
+    public enum ForceTypes { Force, Impulse };
     public enum ForceLevel { L1, L2, L3 };
     public enum AbilityType { PULL, PUSH };
 
@@ -13,43 +13,30 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     [Tooltip("Which ability type")]
     [SerializeField] AbilityType abilityType = AbilityType.PULL;
 
-    [Header("Targeted Ability")]
+    [Header("Ability")]
     [Tooltip("How much force to use for level one")]
     [SerializeField] float forceAmount_L1 = 2f;
+    [Tooltip("What Type of force to use for level one")]
+    [SerializeField] ForceTypes forceType_L1 = ForceTypes.Force;
     [Tooltip("How much force to use for level two")]
     [SerializeField] float forceAmount_L2 = 5f;
+    [Tooltip("What Type of force to use for level one")]
+    [SerializeField] ForceTypes forceType_L2 = ForceTypes.Force;
     [Tooltip("How much force to use for level three")]
     [SerializeField] float forceAmount_L3 = 10f;
+    [Tooltip("What Type of force to use for level one")]
+    [SerializeField] ForceTypes forceType_L3 = ForceTypes.Force;
 
-    [Tooltip("The type of force to use for targeted ability (Force = gradual force | Impulse = instant force)")]
-    [SerializeField] ForceTypes targetAbilityForceType = ForceTypes.Force;
-    [Tooltip("Indicator for what force level is currently in use")]
-    [SerializeField] ForceLevel targetAbilityLevel = ForceLevel.L1;
-
-    private bool isFiring = false;
-    private GameObject abilityTarget = null;
-
-
-    [Header("AOE Ability")]
-    [Tooltip("The GameObject that is animated when AOE is triggered")]
-    [SerializeField] GameObject AOESphere;
     [Tooltip("The amplifier that indicates how much more force is used in AOE compared to targeted (force used in AOE = force used in targeted * amplifier)")]
     [SerializeField] float AOEForceAmplifier = 2f;
-    [Tooltip("The time it takes for the animation to run")]
-    [SerializeField] float AOEAnimationTime = 0.5f;
-    [Tooltip("How many 'frames' there are in the animation (smoothness)")]
-    [SerializeField] float AOEAnimationTimeStep = 0.01f;
-    [Tooltip("The Radius of the AOE Ability")]
-    [SerializeField] float AOERadius = 8.0f;
 
-    [Tooltip("Indicator for what force level is currently in use")]
-    [SerializeField] ForceLevel aoeAbilityLevel = ForceLevel.L1;
-    
-    //
-    //private List<GameObject> insideAOERadius = new List<GameObject>();
-    private IEnumerator animationCoroutine;
-    
+    private ForceTypes currentAbilityForceType = ForceTypes.Force;
+    private ForceLevel abilityLevel = ForceLevel.L1;
 
+    private bool isFiring = false;
+    private bool isFiringAoe = false;
+    private GameObject abilityTarget = null;
+   
     [Header("Target finding")]
     [Tooltip("Reference to Player ability targeting script")]
     [SerializeField] PlayerAbilityTargeting pat;
@@ -69,31 +56,26 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     {
         UpdateForceAccordingToAbility();
         pat.ChangeLineThickness(0.3f);
-
-        /*GameObject _pp = GameObject.FindGameObjectWithTag("InGameUI");
-        if (_pp != null)
-        {
-            _powerHUDScript = _pp.GetComponent<PowerHUDScript>();
-            _powerHUDScript.ChangeAbilityType(this.gameObject, abilityType);
-        }
-        else
-        {
-            Debug.LogWarning("power HUD Script not found");
-        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isFiring && (targetAbilityForceType == ForceTypes.Force))
+        if (isFiring && (currentAbilityForceType == ForceTypes.Force))
         {
             OnFireStart();
+        }
+        else if (isFiringAoe && (currentAbilityForceType == ForceTypes.Force))
+        {
+            OnAOETrigger();
         }
     }
 
     public void OnFireStart()
     {
         isFiring = true;
+
+        UpdateForceType();
 
         abilityTarget = pat.GetTarget();
 
@@ -112,18 +94,18 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         if (targetRB != null)
         {
             float forceAmount = 0f;
-            if (targetAbilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
-            if (targetAbilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
-            if (targetAbilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
+            if (abilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
+            if (abilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
+            if (abilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
 
             Vector3 forceDir = Vector3.Normalize(abilityTarget.transform.position - transform.position);
             Vector3 appliedForce = forceDir * forceAmount;
 
-            if (targetAbilityForceType == ForceTypes.Force)
+            if (currentAbilityForceType == ForceTypes.Force)
             {
                 targetRB.AddForce(appliedForce, ForceMode.Force);
             }
-            else if (targetAbilityForceType == ForceTypes.Impulse)
+            else if (currentAbilityForceType == ForceTypes.Impulse)
             {
                 targetRB.AddForce(appliedForce, ForceMode.Impulse);
             }
@@ -137,24 +119,24 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnTargetLevelSwitch()
     {
-        if (targetAbilityLevel == ForceLevel.L1)
+        if (abilityLevel == ForceLevel.L1)
         {
-            targetAbilityLevel = ForceLevel.L2;
+            abilityLevel = ForceLevel.L2;
             pat.ChangeLineThickness(0.6f);
         }
-        else if (targetAbilityLevel == ForceLevel.L2)
+        else if (abilityLevel == ForceLevel.L2)
         {
-            targetAbilityLevel = ForceLevel.L3;
+            abilityLevel = ForceLevel.L3;
             pat.ChangeLineThickness(1.0f);
         }
-        else if (targetAbilityLevel == ForceLevel.L3)
+        else if (abilityLevel == ForceLevel.L3)
         {
-            targetAbilityLevel = ForceLevel.L1;
+            abilityLevel = ForceLevel.L1;
             pat.ChangeLineThickness(0.3f);
         }
         else
         {
-            targetAbilityLevel = ForceLevel.L1;
+            abilityLevel = ForceLevel.L1;
             pat.ChangeLineThickness(0.3f);
         }
 
@@ -163,98 +145,76 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnAOETrigger()
     {
-        if (AOESphere.activeSelf)
-            return;
+        Debug.Log("aoe started");
+        isFiringAoe = true;
 
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, AOERadius);
-        Debug.Log(hitColliders.Length);
+        UpdateForceType();
 
         float forceAmount = 0f;
-        if (aoeAbilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
-        if (aoeAbilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
-        if (aoeAbilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
+        if (abilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
+        if (abilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
+        if (abilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
 
-        foreach (Collider col in hitColliders)
+
+        List<GameObject> targetList = pat.GetAoeTargetsList();
+        for (int i = 0; i < targetList.Count; i++)
         {
-            Debug.Log(col.gameObject.name);
-            if (col.gameObject.tag != "MovableObject") continue;
+            GameObject _t = targetList[i];
+            if (_t.tag != "MovableObject") continue;
 
-            Rigidbody targetRB = col.gameObject.GetComponent<Rigidbody>();
+            Rigidbody targetRB = _t.GetComponent<Rigidbody>();
 
-            Vector3 forceDir = Vector3.Normalize(col.transform.position - transform.position);
+            Vector3 forceDir = Vector3.Normalize(_t.transform.position - transform.position);
             Vector3 appliedForce = forceDir * forceAmount * AOEForceAmplifier;
 
-            targetRB.AddForce(appliedForce, ForceMode.Impulse);
+            if (currentAbilityForceType == ForceTypes.Force)
+            {
+                targetRB.AddForce(appliedForce, ForceMode.Force);
+            }
+            else if (currentAbilityForceType == ForceTypes.Impulse)
+            {
+                targetRB.AddForce(appliedForce, ForceMode.Impulse);
+            }
         }
+    }
 
-        animationCoroutine = AOEAnimation();
-        StartCoroutine(animationCoroutine);
+    public void OnAOEStop()
+    {
+        Debug.Log("aoe stopped");
+
+        isFiringAoe = false;
+    }
+
+    private void UpdateForceType()
+    {
+        if (abilityLevel == ForceLevel.L1) currentAbilityForceType = forceType_L1;
+        else if (abilityLevel == ForceLevel.L2) currentAbilityForceType = forceType_L2;
+        else if (abilityLevel == ForceLevel.L3) currentAbilityForceType = forceType_L3;
     }
 
     public void OnAOELevelSwitch()
     {
-        if (aoeAbilityLevel == ForceLevel.L1)
+        if (abilityLevel == ForceLevel.L1)
         {
-            aoeAbilityLevel = ForceLevel.L2;
+            abilityLevel = ForceLevel.L2;
         }
-        else if (aoeAbilityLevel == ForceLevel.L2)
+        else if (abilityLevel == ForceLevel.L2)
         {
-            aoeAbilityLevel = ForceLevel.L3;
+            abilityLevel = ForceLevel.L3;
         }
-        else if (aoeAbilityLevel == ForceLevel.L3)
+        else if (abilityLevel == ForceLevel.L3)
         {
-            aoeAbilityLevel = ForceLevel.L1;
+            abilityLevel = ForceLevel.L1;
         }
         else
         {
-            aoeAbilityLevel = ForceLevel.L1;
+            abilityLevel = ForceLevel.L1;
         }
-
-        //_powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, aoeAbilityLevel, true);
-    }
-
-    /*void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "MovableObject")
-        {
-            insideAOERadius.Add(other.gameObject);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "MovableObject")
-        {
-            insideAOERadius.Remove(other.gameObject);
-        }
-    }*/
-
-    private IEnumerator AOEAnimation()
-    {
-        float animationTime = AOEAnimationTime;
-        Vector3 originalScale = AOESphere.transform.localScale;
-
-        AOESphere.SetActive(true);
-
-        while (0f < animationTime)
-        {
-            animationTime = animationTime - AOEAnimationTimeStep;
-
-            AOESphere.transform.localScale = originalScale * (1 - (animationTime / AOEAnimationTime));
-
-            yield return new WaitForSeconds(AOEAnimationTimeStep);
-        }
-        AOESphere.SetActive(false);
-        yield return null;
     }
 
     public void SetPlayerAbility(AbilityType _abilityType)
     {
         abilityType = _abilityType;
-        //if (_powerHUDScript != null)
-        //{
-        //    _powerHUDScript.ChangeAbilityType(this.gameObject, abilityType);
-        //}
         UpdateForceAccordingToAbility();
     }
 
