@@ -2,16 +2,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-public class PlayerAbilityBehaviour : MonoBehaviour
+public class PlayerAbilityBehaviourOld : MonoBehaviour
 {
 
     enum ForceTypes { Force, Impulse };
-    public enum ForceLevel { L1, L2, L3 };
-    public enum AbilityType { PULL, PUSH };
 
     [Header("Ability General")]
     [Tooltip("Which ability type")]
-    [SerializeField] AbilityType abilityType = AbilityType.PULL;
+    [SerializeField] PlayerAbilityBehaviour.AbilityType abilityType = PlayerAbilityBehaviour.AbilityType.PULL;
 
     [Header("Targeted Ability")]
     [Tooltip("How much force to use for level one")]
@@ -24,7 +22,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     [Tooltip("The type of force to use for targeted ability (Force = gradual force | Impulse = instant force)")]
     [SerializeField] ForceTypes targetAbilityForceType = ForceTypes.Force;
     [Tooltip("Indicator for what force level is currently in use")]
-    [SerializeField] ForceLevel targetAbilityLevel = ForceLevel.L1;
+    [SerializeField] PlayerAbilityBehaviour.ForceLevel targetAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L1;
 
     private bool isFiring = false;
     private GameObject abilityTarget = null;
@@ -43,7 +41,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     [SerializeField] float AOERadius = 8.0f;
 
     [Tooltip("Indicator for what force level is currently in use")]
-    [SerializeField] ForceLevel aoeAbilityLevel = ForceLevel.L1;
+    [SerializeField] PlayerAbilityBehaviour.ForceLevel aoeAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L1;
     
     //
     //private List<GameObject> insideAOERadius = new List<GameObject>();
@@ -112,9 +110,9 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         if (targetRB != null)
         {
             float forceAmount = 0f;
-            if (targetAbilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
-            if (targetAbilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
-            if (targetAbilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
+            if (targetAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L1) { forceAmount = forceAmount_L1; }
+            if (targetAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L2) { forceAmount = forceAmount_L2; }
+            if (targetAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L3) { forceAmount = forceAmount_L3; }
 
             Vector3 forceDir = Vector3.Normalize(abilityTarget.transform.position - transform.position);
             Vector3 appliedForce = forceDir * forceAmount;
@@ -137,24 +135,24 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnTargetLevelSwitch()
     {
-        if (targetAbilityLevel == ForceLevel.L1)
+        if (targetAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L1)
         {
-            targetAbilityLevel = ForceLevel.L2;
+            targetAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L2;
             pat.ChangeLineThickness(0.6f);
         }
-        else if (targetAbilityLevel == ForceLevel.L2)
+        else if (targetAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L2)
         {
-            targetAbilityLevel = ForceLevel.L3;
+            targetAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L3;
             pat.ChangeLineThickness(1.0f);
         }
-        else if (targetAbilityLevel == ForceLevel.L3)
+        else if (targetAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L3)
         {
-            targetAbilityLevel = ForceLevel.L1;
+            targetAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L1;
             pat.ChangeLineThickness(0.3f);
         }
         else
         {
-            targetAbilityLevel = ForceLevel.L1;
+            targetAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L1;
             pat.ChangeLineThickness(0.3f);
         }
 
@@ -170,9 +168,9 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         Debug.Log(hitColliders.Length);
 
         float forceAmount = 0f;
-        if (aoeAbilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
-        if (aoeAbilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
-        if (aoeAbilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
+        if (aoeAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L1) { forceAmount = forceAmount_L1; }
+        if (aoeAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L2) { forceAmount = forceAmount_L2; }
+        if (aoeAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L3) { forceAmount = forceAmount_L3; }
 
         foreach (Collider col in hitColliders)
         {
@@ -193,24 +191,24 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnAOELevelSwitch()
     {
-        if (aoeAbilityLevel == ForceLevel.L1)
+        if (aoeAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L1)
         {
-            aoeAbilityLevel = ForceLevel.L2;
+            aoeAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L2;
         }
-        else if (aoeAbilityLevel == ForceLevel.L2)
+        else if (aoeAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L2)
         {
-            aoeAbilityLevel = ForceLevel.L3;
+            aoeAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L3;
         }
-        else if (aoeAbilityLevel == ForceLevel.L3)
+        else if (aoeAbilityLevel == PlayerAbilityBehaviour.ForceLevel.L3)
         {
-            aoeAbilityLevel = ForceLevel.L1;
+            aoeAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L1;
         }
         else
         {
-            aoeAbilityLevel = ForceLevel.L1;
+            aoeAbilityLevel = PlayerAbilityBehaviour.ForceLevel.L1;
         }
 
-        //_powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, aoeAbilityLevel, true);
+        _powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, aoeAbilityLevel, true);
     }
 
     /*void OnTriggerEnter(Collider other)
@@ -248,24 +246,24 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         yield return null;
     }
 
-    public void SetPlayerAbility(AbilityType _abilityType)
+    public void SetPlayerAbility(PlayerAbilityBehaviour.AbilityType _abilityType)
     {
         abilityType = _abilityType;
-        //if (_powerHUDScript != null)
-        //{
-        //    _powerHUDScript.ChangeAbilityType(this.gameObject, abilityType);
-        //}
+        if (_powerHUDScript != null)
+        {
+            _powerHUDScript.ChangeAbilityType(this.gameObject, abilityType);
+        }
         UpdateForceAccordingToAbility();
     }
 
-    public AbilityType GetPlayerAbility()
+    public PlayerAbilityBehaviour.AbilityType GetPlayerAbility()
     {
         return abilityType;
     }
 
     private void UpdateForceAccordingToAbility()
     {
-        if (abilityType == AbilityType.PULL)
+        if (abilityType == PlayerAbilityBehaviour.AbilityType.PULL)
         {
             playerMesh.material = pullMaterial;
 
@@ -273,7 +271,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
             forceAmount_L2 = Mathf.Abs(forceAmount_L2) * -1;
             forceAmount_L3 = Mathf.Abs(forceAmount_L3) * -1;
         }
-        else if (abilityType == AbilityType.PUSH)
+        else if (abilityType == PlayerAbilityBehaviour.AbilityType.PUSH)
         {
             playerMesh.material = pushMaterial;
 

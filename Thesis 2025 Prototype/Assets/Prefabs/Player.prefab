@@ -249,7 +249,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8834899179816890121}
   - component: {fileID: 2441673329988441956}
-  - component: {fileID: 2443004818065182434}
   - component: {fileID: 8827249889790460921}
   - component: {fileID: 7804458033350431323}
   - component: {fileID: 543815406356559295}
@@ -301,34 +300,6 @@ MonoBehaviour:
   moveSpeed: 7
   jumpForce: 8
   shadow: {fileID: 8983122223382380391}
---- !u!114 &2443004818065182434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7555090383640608989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2e978b0bbde36b45bca04d885fc92f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilityType: 0
-  forceAmount_L1: 20
-  forceAmount_L2: 30
-  forceAmount_L3: 60
-  targetAbilityForceType: 0
-  targetAbilityLevel: 0
-  AOESphere: {fileID: 3912062960872433173}
-  AOEForceAmplifier: 2
-  AOEAnimationTime: 0.5
-  AOEAnimationTimeStep: 0.01
-  AOERadius: 8
-  aoeAbilityLevel: 0
-  pat: {fileID: 8827249889790460921}
-  playerMesh: {fileID: 8243907132042594212}
-  pullMaterial: {fileID: 2100000, guid: d0981cdad9a6f03469629ca36bae52b8, type: 2}
-  pushMaterial: {fileID: 2100000, guid: 550618ff4e993af45b540e3ca8d045f6, type: 2}
 --- !u!114 &8827249889790460921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +315,7 @@ MonoBehaviour:
   target: {fileID: 0}
   targetFindingDelay: 0.2
   targettingRadius: 15
+  minTargettingRadius: 1
   lr: {fileID: 2976026571193287356}
 --- !u!114 &7804458033350431323
 MonoBehaviour:
