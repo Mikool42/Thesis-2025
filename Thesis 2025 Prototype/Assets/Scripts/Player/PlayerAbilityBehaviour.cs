@@ -192,7 +192,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         else if (abilityLevel == ForceLevel.L3) currentAbilityForceType = forceType_L3;
     }
 
-    public void OnAOELevelSwitch()
+    /*public void OnAOELevelSwitch()
     {
         if (abilityLevel == ForceLevel.L1)
         {
@@ -210,7 +210,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         {
             abilityLevel = ForceLevel.L1;
         }
-    }
+    }*/
 
     public void SetPlayerAbility(AbilityType _abilityType)
     {
