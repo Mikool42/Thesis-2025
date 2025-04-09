@@ -12,6 +12,8 @@ public class MovableObjectTargetColorSwitch : MonoBehaviour
     [Tooltip("MeshRenderer to cahnge color on, if not assigned will use default MeshRenderer")]
     [SerializeField] MeshRenderer presetMeshRenderer;
 
+    private bool seperatIndicator = false;
+
     private MeshRenderer mr;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,6 +21,7 @@ public class MovableObjectTargetColorSwitch : MonoBehaviour
     {
         if (presetMeshRenderer != null)
         {
+            seperatIndicator = true;
             mr = presetMeshRenderer;
         }
         else
@@ -37,8 +40,6 @@ public class MovableObjectTargetColorSwitch : MonoBehaviour
         {
             mr.material = material1;
         }
-
-        
     }
 
     public void SetAsTarget(bool isTarget, PlayerAbilityBehaviour.AbilityType abilityType)
@@ -81,5 +82,15 @@ public class MovableObjectTargetColorSwitch : MonoBehaviour
         {
             matArray[1].SetInt("_Outline", _bool);
         }
+    }
+
+    public bool IsSeperateIndicator()
+    {
+        return seperatIndicator;
+    }
+
+    public GameObject GetSeperateIndicator()
+    {
+        return presetMeshRenderer.gameObject;
     }
 }

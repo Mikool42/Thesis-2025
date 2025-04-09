@@ -176,9 +176,13 @@ public class PlayerAbilityTargeting : MonoBehaviour
         if (isTooClose) SetLazerMaterialBool(lr, 1);
         else SetLazerMaterialBool(lr, 0);
 
+        GameObject _tar = target;
+        MovableObjectTargetColorSwitch mov = target.GetComponent<MovableObjectTargetColorSwitch>();
+        if (mov.IsSeperateIndicator()) _tar = mov.GetSeperateIndicator();
+
         var points = new Vector3[2];
         points[0] = transform.position;
-        points[1] = target.transform.position;
+        points[1] = _tar.transform.position;
         lr.SetPositions(points);
         ChangeLineThickness(lineThickness);
     }
@@ -261,9 +265,13 @@ public class PlayerAbilityTargeting : MonoBehaviour
                 SetLazerMaterialBool(_targetLR, 0);
             }
 
+            GameObject _tar = targetsMinusMainTarget[i];
+            MovableObjectTargetColorSwitch mov = _tar.GetComponent<MovableObjectTargetColorSwitch>();
+            if (mov.IsSeperateIndicator()) _tar = mov.GetSeperateIndicator();
+
             var points = new Vector3[2];
             points[0] = transform.position;
-            points[1] = targetsMinusMainTarget[i].transform.position;
+            points[1] = _tar.transform.position;
             _targetLR.SetPositions(points);
 
             _targetLR.startWidth = 0.2f;
