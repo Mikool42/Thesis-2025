@@ -20,6 +20,9 @@ public class PlayerAbilityTargeting : MonoBehaviour
     [Tooltip("The reference for the lazer lines line renderer")]
     [SerializeField] private LineRenderer lr;
 
+    [Tooltip("The Color the line should become on single target when the object is within min radius")]
+    [SerializeField] private Color minLazerColor;
+
     [Tooltip("The line prefab to be used for AOE targets")]
     [SerializeField] private GameObject AOELazerPrefab;
 
@@ -34,6 +37,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
     private float lineThickness = 1.0f;
 
     private Vector3 prevTargetPos;
+    private bool isTooClose = false;
 
     private List<GameObject> viableTargets = new List<GameObject>();
 
@@ -60,9 +64,17 @@ public class PlayerAbilityTargeting : MonoBehaviour
         if (target != null)
         {
             float _dist = Vector3.Distance(transform.position, target.transform.position);
-            if (_dist > targettingRadius || _dist < minTargettingRadius)
+            if (_dist > targettingRadius)
             {
                 OnTargetOutOfRange();
+            }
+            else if (_dist < minTargettingRadius)
+            {
+                OnTargetLessThanMinRange();
+            }
+            else
+            {
+                OnTargetIsInRange();
             }
         }
 
@@ -140,6 +152,16 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
         target = null;
     }
+    
+    private void OnTargetLessThanMinRange()
+    {
+        isTooClose = true;
+    }
+
+    private void OnTargetIsInRange()
+    {
+        isTooClose = false;
+    }
 
     public void RenderLineOnTarget()
     {
@@ -150,6 +172,10 @@ public class PlayerAbilityTargeting : MonoBehaviour
         }
 
         lr.enabled = true;
+
+        if (isTooClose) SetLazerMaterialBool(lr, 1);
+        else SetLazerMaterialBool(lr, 0);
+
         var points = new Vector3[2];
         points[0] = transform.position;
         points[1] = target.transform.position;
@@ -169,12 +195,13 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
     public GameObject GetTarget() 
     {
+        if (isTooClose) return null;
         return target;
     }
     
-    public float GetTargettingRadius() 
+    public Vector2 GetTargettingRadius() 
     {
-        return targettingRadius;
+        return new Vector2(minTargettingRadius, targettingRadius);
     }
 
     private IEnumerator CheckObjects(float delay)
@@ -190,7 +217,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
             {
                 Vector3 viewPos = cam.WorldToViewportPoint(movObj.transform.position);
                 float dist = Vector3.Distance(transform.position, movObj.transform.position);
-                if (dist <= targettingRadius && dist >= minTargettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
+                if (dist <= targettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
                 {
                     viableTargets.Add(movObj);
                 }
@@ -201,7 +228,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
     }
 
     private void AddLinesToAOETargets()
-    {
+    {   
         // Clear out and disable the active lazers
         for (int i = 0; i < aoeLazersActive.Count; i++)
         {
@@ -222,10 +249,17 @@ public class PlayerAbilityTargeting : MonoBehaviour
             if (i >= targetsMinusMainTarget.Count) return;
 
             GameObject _target = aoeLazers[i];
-            aoeLazersActive.Add(_target);
 
             LineRenderer _targetLR = _target.GetComponent<LineRenderer>();
             _targetLR.enabled = true;
+
+            float dist = Vector3.Distance(transform.position, targetsMinusMainTarget[i].transform.position);
+            if (dist <= minTargettingRadius) SetLazerMaterialBool(_targetLR, 1);
+            else
+            {
+                aoeLazersActive.Add(_target);
+                SetLazerMaterialBool(_targetLR, 0);
+            }
 
             var points = new Vector3[2];
             points[0] = transform.position;
@@ -260,5 +294,10 @@ public class PlayerAbilityTargeting : MonoBehaviour
         List<GameObject> sortedList = new List<GameObject> ();
         sortedList = unsortedList.OrderBy(_object => _object.transform.position.x).ToList();
         return sortedList;
+    }
+
+    private void SetLazerMaterialBool(LineRenderer _lr, int _bool) //false = 0, true = 1
+    {
+        _lr.material.SetInt("_TriggerHighlight", _bool);
     }
 }

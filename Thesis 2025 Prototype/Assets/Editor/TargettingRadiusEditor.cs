@@ -9,6 +9,10 @@ public class TargettingRadiusEditor : Editor
         PlayerAbilityTargeting pat = (PlayerAbilityTargeting) target;
 
         Handles.color = Color.white;
-        Handles.DrawWireArc(pat.transform.position, Vector3.up, Vector3.forward, 360, pat.GetTargettingRadius());
+
+        Vector2 radi = pat.GetTargettingRadius();
+
+        Handles.DrawWireArc(pat.transform.position, Vector3.up, Vector3.forward, 360, radi.x);
+        Handles.DrawWireArc(pat.transform.position, Vector3.up, Vector3.forward, 360, radi.y);
     }
 }

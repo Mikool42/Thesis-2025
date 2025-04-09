@@ -162,6 +162,9 @@ public class PlayerAbilityBehaviour : MonoBehaviour
             GameObject _t = targetList[i];
             if (_t.tag != "MovableObject") continue;
 
+            float dist = Vector3.Distance(transform.position, _t.transform.position);
+            if (dist <= pat.GetTargettingRadius().x) continue;
+
             Rigidbody targetRB = _t.GetComponent<Rigidbody>();
 
             Vector3 forceDir = Vector3.Normalize(_t.transform.position - transform.position);
