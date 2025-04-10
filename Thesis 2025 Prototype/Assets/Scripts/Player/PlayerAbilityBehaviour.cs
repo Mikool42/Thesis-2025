@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using SmallHedge.SoundManager;
 
 public class PlayerAbilityBehaviour : MonoBehaviour
 {
@@ -73,23 +74,23 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnFireStart()
     {
+        abilityTarget = pat.GetTarget();
+        if (abilityTarget == null) return;
+
+        if (!isFiring) PlayPullPushSound();
+
         isFiring = true;
 
         UpdateForceType();
 
-        abilityTarget = pat.GetTarget();
 
         Rigidbody targetRB = null;
-        if (abilityTarget != null)
-        {
-            if (abilityTarget.GetComponent<TurnOffDiscMovement>() != null &&
-            !abilityTarget.GetComponent<TurnOffDiscMovement>().canMove)
-            {
-                return;
-            }
 
-            targetRB = abilityTarget.GetComponent<Rigidbody>();
-        }
+        if (abilityTarget.GetComponent<TurnOffDiscMovement>() != null &&
+        !abilityTarget.GetComponent<TurnOffDiscMovement>().canMove)
+            return;
+
+        targetRB = abilityTarget.GetComponent<Rigidbody>();
 
         if (targetRB != null)
         {
@@ -145,7 +146,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnAOETrigger()
     {
-        Debug.Log("aoe started");
+        if (!isFiringAoe) PlayPullPushSound();
+
         isFiringAoe = true;
 
         UpdateForceType();
@@ -243,6 +245,18 @@ public class PlayerAbilityBehaviour : MonoBehaviour
             forceAmount_L1 = Mathf.Abs(forceAmount_L1);
             forceAmount_L2 = Mathf.Abs(forceAmount_L2);
             forceAmount_L3 = Mathf.Abs(forceAmount_L3);
+        }
+    }
+
+    private void PlayPullPushSound()
+    {
+        if (forceAmount_L1 < 0)
+        {
+            SoundManager.PlaySound(SoundType.PULL, null, 0.3f);
+        }
+        else
+        {
+            SoundManager.PlaySound(SoundType.PUSH, null, 0.3f);
         }
     }
 }
