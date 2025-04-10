@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System.Collections;
+using SmallHedge.SoundManager;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -61,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
     
     public void OnJump()
     {
+        SoundManager.PlaySound(SoundType.JUMP);
+
         if (FDScript != null && FDScript.GetIsGrounded())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);

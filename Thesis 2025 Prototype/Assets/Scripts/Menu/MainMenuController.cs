@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using SmallHedge.SoundManager;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -22,11 +23,15 @@ public class MainMenuController : MonoBehaviour
 
     public void OnStartButtonPress()
     {
+        PlayButtonSound();
+
         SceneManager.LoadScene(firstLevel);
     }
 
     public void OnSettingsButtonPress()
     {
+        PlayButtonSound();
+
         mainMenu.SetActive(false);
         settingsMenu.SetActive(true);
         controlsMenu.SetActive(false);
@@ -35,6 +40,8 @@ public class MainMenuController : MonoBehaviour
 
     public void OnControlsButtonPress()
     {
+        PlayButtonSound();
+
         mainMenu.SetActive(false);
         settingsMenu.SetActive(false);
         controlsMenu.SetActive(true);
@@ -43,6 +50,8 @@ public class MainMenuController : MonoBehaviour
 
     public void OnCreditsButtonPress()
     {
+        PlayButtonSound();
+
         mainMenu.SetActive(false);
         settingsMenu.SetActive(false);
         controlsMenu.SetActive(false);
@@ -51,14 +60,23 @@ public class MainMenuController : MonoBehaviour
 
     public void OnEndButtonPress()
     {
+        PlayButtonSound();
+
         StopAllCoroutines();
     }
 
     public void OnBackButtonPress()
     {
+        PlayButtonSound();
+
         mainMenu.SetActive(true);
         settingsMenu.SetActive(false);
         controlsMenu.SetActive(false);
         creditsMenu.SetActive(false);
+    }
+
+    private void PlayButtonSound()
+    {
+        SoundManager.PlaySound(SoundType.BUTTON);
     }
 }
