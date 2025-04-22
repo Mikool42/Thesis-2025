@@ -150,6 +150,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
         isFiringAoe = true;
 
+        pat.OnAOEStart(abilityType);
+
         UpdateForceType();
 
         float forceAmount = 0f;
@@ -185,7 +187,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnAOEStop()
     {
-        Debug.Log("aoe stopped");
+        pat.OnAOEStop();
 
         isFiringAoe = false;
     }

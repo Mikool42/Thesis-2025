@@ -23,14 +23,24 @@ public class PlayerAbilityTargeting : MonoBehaviour
     [Tooltip("The Color the line should become on single target when the object is within min radius")]
     [SerializeField] private Color minLazerColor;
 
-    [Tooltip("The line prefab to be used for AOE targets")]
+    /*[Tooltip("The line prefab to be used for AOE targets")]
     [SerializeField] private GameObject AOELazerPrefab;
 
     [Tooltip("The reference for the AOE lazer container object")]
-    [SerializeField] private GameObject aoeLazerContainer;
+    [SerializeField] private GameObject aoeLazerContainer;*/
+
+    [Tooltip("The particle system prefab to be used for AOE Push")]
+    [SerializeField] private GameObject PushParticlePrefab;
+
+    [Tooltip("The particle system prefab to be used for AOE Pull")]
+    [SerializeField] private GameObject PullParticlePrefab;
 
     private List<GameObject> aoeLazers = new List<GameObject>();
     private List<GameObject> aoeLazersActive = new List<GameObject>();
+
+    private GameObject pushParticle = null;
+    private GameObject pullParticle = null;
+    private bool AOEStarted = false;
 
     private Camera cam;
 
@@ -56,6 +66,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
         //InstantiateAoeLazers();
         RenderLineOnTarget();
         StartCoroutine(CheckObjects(targetFindingDelay));
+        InstantiateParticles();
     }
 
     void Update()
@@ -231,7 +242,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
         }
     }
 
-    private void AddLinesToAOETargets()
+    // De-commisioned
+   /* private void AddLinesToAOETargets()
     {   
         // Clear out and disable the active lazers
         for (int i = 0; i < aoeLazersActive.Count; i++)
@@ -279,14 +291,15 @@ public class PlayerAbilityTargeting : MonoBehaviour
         }
         
 
-    }
+    }*/
 
     public List<GameObject> GetAoeTargetsList()
     {
         return viableTargets;
     }
 
-    private void InstantiateAoeLazers()
+    // De-commisioned
+    /*private void InstantiateAoeLazers()
     {
         for (int i = 0; i < 10;i++)
         {
@@ -295,6 +308,38 @@ public class PlayerAbilityTargeting : MonoBehaviour
             newLazer.GetComponent<LineRenderer>().enabled = false;
             aoeLazers.Add(newLazer);
         }
+    }*/
+
+    private void InstantiateParticles()
+    {
+        pushParticle = Instantiate(PushParticlePrefab);
+        pullParticle = Instantiate(PullParticlePrefab);
+
+        pushParticle.transform.parent = transform;
+        pullParticle.transform.parent = transform;
+    }
+
+    public void OnAOEStart(PlayerAbilityBehaviour.AbilityType _abilityType)
+    {
+        if (!AOEStarted && _abilityType == PlayerAbilityBehaviour.AbilityType.PULL)
+        {
+            Debug.Log("Pull Start");
+            pullParticle.GetComponent<ParticleSystem>().Play();
+            AOEStarted = true;
+        }
+        else if (!AOEStarted && _abilityType == PlayerAbilityBehaviour.AbilityType.PUSH)
+        {
+            Debug.Log("Push Start");
+            pushParticle.GetComponent<ParticleSystem>().Play();
+            AOEStarted = true;
+        }
+    }
+
+    public void OnAOEStop()
+    {
+        pullParticle.GetComponent<ParticleSystem>().Stop();
+        pushParticle.GetComponent<ParticleSystem>().Stop();
+        AOEStarted = false;
     }
 
     private List<GameObject> SortByPosX(List<GameObject> unsortedList)
