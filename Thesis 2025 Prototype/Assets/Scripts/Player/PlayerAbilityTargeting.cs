@@ -53,7 +53,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
         //target = GameObject.FindGameObjectsWithTag("MovableObject")[0];
         //prevTargetPos = target.transform.position;
-        InstantiateAoeLazers();
+        //InstantiateAoeLazers();
         RenderLineOnTarget();
         StartCoroutine(CheckObjects(targetFindingDelay));
     }
@@ -82,7 +82,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
             return;
 
         RenderLineOnTarget();
-        AddLinesToAOETargets();
+        //AddLinesToAOETargets();
     }
 
     public void OnTargetLeft()
@@ -193,7 +193,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
         if (lr == null) { return; }
 
-        lr.startWidth = 0.2f;
+        lr.startWidth = lineThickness;
         lr.endWidth = lineThickness;
     }
 
