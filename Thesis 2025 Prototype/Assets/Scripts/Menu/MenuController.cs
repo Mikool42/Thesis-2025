@@ -1,66 +1,82 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using SmallHedge.SoundManager;
 
 public class MenuController : MonoBehaviour
 {
-
-    public GameObject inGameUI;
     public GameObject mainMenuUI;
-
-    internal enum State
-    {
-        InGame,
-        InMenu,
-    }
-
-    internal State m_State;
+    public GameObject settingsMenu;
+    public GameObject controlsMenu;
+    public GameObject levelsMenu;
 
     public void OnEnable()
     {
-        // By default, hide menu and show game UI.
-        inGameUI.SetActive(false);
+        OnMenuExit();
+    }
+
+    public void OnMenuEnter()
+    {
+        Debug.Log("Im in!");
+        mainMenuUI.SetActive(true);
+        settingsMenu.SetActive(false);
+        controlsMenu.SetActive(false);
+        levelsMenu.SetActive(false);
+    }
+
+    public void OnMenuExit()
+    {
+        Debug.Log("Im out!");
         mainMenuUI.SetActive(false);
-
-        m_State = State.InGame;
+        settingsMenu.SetActive(false);
+        controlsMenu.SetActive(false);
+        levelsMenu.SetActive(false);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void EnterSettings()
     {
+        mainMenuUI.SetActive(false);
+        settingsMenu.SetActive(true);
+        controlsMenu.SetActive(false);
+        levelsMenu.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ExitSettings()
     {
-        
+        OnMenuEnter();
     }
 
-    public void OnMenuToggle()
+    public void EnterControls()
     {
-        if(m_State == State.InGame)
-        {
-            Debug.Log("in menu enter in controller");
-            inGameUI.SetActive(false);
-            mainMenuUI.SetActive(true);
+        mainMenuUI.SetActive(false);
+        settingsMenu.SetActive(false);
+        controlsMenu.SetActive(true);
+        levelsMenu.SetActive(false);
+    }
 
-            m_State = State.InMenu;
-        }
-        else if (m_State == State.InMenu)
-        {
-            Debug.Log("in menu exit in controller");
-            //inGameUI.SetActive(true);
-            mainMenuUI.SetActive(false);
+    public void ExitControls()
+    {
+        OnMenuEnter();
+    }
 
-            m_State = State.InGame;
-        }
+    public void EnterLevels()
+    {
+        mainMenuUI.SetActive(false);
+        settingsMenu.SetActive(false);
+        controlsMenu.SetActive(false);
+        levelsMenu.SetActive(true);
+    }
+
+    public void ExitLevels()
+    {
+        OnMenuEnter();
     }
 
     public void SwitchLevel(int level)
     {
-        if(level <= 0)
+        if(level < 0)
         {
-            Debug.LogError("Level is 0 or less, not allowed level starts at 1");
+            Debug.LogError("Level less than 0, not allowed level starts at 1");
         }
 
         SceneManager.LoadScene(sceneBuildIndex:level);
@@ -71,5 +87,17 @@ public class MenuController : MonoBehaviour
         string currentSceneName = SceneManager.GetActiveScene().name;
         Debug.Log(currentSceneName);
         SceneManager.LoadScene(currentSceneName);
+    }
+
+    public void OnEndButtonPress()
+    {
+        PlayButtonSound();
+
+        StopAllCoroutines();
+    }
+
+    private void PlayButtonSound()
+    {
+        SoundManager.PlaySound(SoundType.BUTTON);
     }
 }

@@ -21,7 +21,7 @@ public class PlayerMenuTrigger : MonoBehaviour
     {
         if (menuController == null) { return; }
 
-        menuController.OnMenuToggle();
+        menuController.OnMenuEnter();
 
         GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in _players)
@@ -33,14 +33,14 @@ public class PlayerMenuTrigger : MonoBehaviour
         }
 
         // Disable gameplay inputs.
-        playerInput.SwitchCurrentActionMap("Menu");
+        SwitchActionMapToMenu();
     }
 
     public void OnMenuExit()
     {
         if (menuController == null) { return; }
         
-        menuController.OnMenuToggle();
+        menuController.OnMenuExit();
 
         GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in _players)
@@ -52,7 +52,7 @@ public class PlayerMenuTrigger : MonoBehaviour
         }
 
         // Reenable gameplay inputs.
-        playerInput.SwitchCurrentActionMap("Player");
+        SwitchActionMapToPlayer();
     }
 
     public void SwitchActionMapToPlayer()
