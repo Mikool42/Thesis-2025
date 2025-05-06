@@ -22,18 +22,6 @@ public class PlayerMenuTrigger : MonoBehaviour
         if (menuController == null) { return; }
 
         menuController.OnMenuEnter();
-
-        GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject p in _players)
-        { 
-            if (p != gameObject)
-            {
-                p.GetComponent<PlayerMenuTrigger>().SwitchActionMapToMenu();
-            }
-        }
-
-        // Disable gameplay inputs.
-        SwitchActionMapToMenu();
     }
 
     public void OnMenuExit()
@@ -41,18 +29,6 @@ public class PlayerMenuTrigger : MonoBehaviour
         if (menuController == null) { return; }
         
         menuController.OnMenuExit();
-
-        GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject p in _players)
-        {
-            if (p != gameObject)
-            {
-                p.GetComponent<PlayerMenuTrigger>().SwitchActionMapToPlayer();
-            }
-        }
-
-        // Reenable gameplay inputs.
-        SwitchActionMapToPlayer();
     }
 
     public void SwitchActionMapToPlayer()
