@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
@@ -20,6 +20,12 @@ public class PlayerAbilityTargeting : MonoBehaviour
     [Tooltip("The reference for the lazer lines line renderer")]
     [SerializeField] private LineRenderer lr;
 
+    [Tooltip("The Color the line should become when player is using push ability")]
+    [SerializeField] private Color pushLazerColor;
+    
+    [Tooltip("The Color the line should become when player is using pull ability")]
+    [SerializeField] private Color pullLazerColor;
+    
     [Tooltip("The Color the line should become on single target when the object is within min radius")]
     [SerializeField] private Color minLazerColor;
 
@@ -59,6 +65,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
         pab = GetComponent<PlayerAbilityBehaviour>();
 
         //lr = GetComponent<LineRenderer>();
+        SetLazerColorAccordingToAbility(pab.GetPlayerAbility());
+        
         lr.enabled = false;
 
         //target = GameObject.FindGameObjectsWithTag("MovableObject")[0];
@@ -323,13 +331,11 @@ public class PlayerAbilityTargeting : MonoBehaviour
     {
         if (!AOEStarted && _abilityType == PlayerAbilityBehaviour.AbilityType.PULL)
         {
-            Debug.Log("Pull Start");
             pullParticle.GetComponent<ParticleSystem>().Play();
             AOEStarted = true;
         }
         else if (!AOEStarted && _abilityType == PlayerAbilityBehaviour.AbilityType.PUSH)
         {
-            Debug.Log("Push Start");
             pushParticle.GetComponent<ParticleSystem>().Play();
             AOEStarted = true;
         }
@@ -352,5 +358,16 @@ public class PlayerAbilityTargeting : MonoBehaviour
     private void SetLazerMaterialBool(LineRenderer _lr, int _bool) //false = 0, true = 1
     {
         _lr.material.SetInt("_TriggerHighlight", _bool);
+    }
+    
+    public void SetLazerColorAccordingToAbility(PlayerAbilityBehaviour.AbilityType _abilityType)
+    {
+        if (_abilityType == PlayerAbilityBehaviour.AbilityType.PULL) SetLazerMaterialColor(lr, pullLazerColor);
+        else SetLazerMaterialColor(lr, pushLazerColor);
+    }
+    
+    private void SetLazerMaterialColor(LineRenderer _lr, Color _color) //false = 0, true = 1
+    {
+        _lr.material.SetColor("_BaseColor", _color);
     }
 }

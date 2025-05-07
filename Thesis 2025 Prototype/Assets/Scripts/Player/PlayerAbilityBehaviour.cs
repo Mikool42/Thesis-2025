@@ -222,6 +222,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     public void SetPlayerAbility(AbilityType _abilityType)
     {
         abilityType = _abilityType;
+        pat.SetLazerColorAccordingToAbility(abilityType);
         UpdateForceAccordingToAbility();
     }
 

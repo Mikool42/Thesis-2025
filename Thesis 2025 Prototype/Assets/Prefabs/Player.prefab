@@ -255,7 +255,9 @@ MonoBehaviour:
   targettingRadius: 20
   minTargettingRadius: 4
   lr: {fileID: 2976026571193287356}
-  minLazerColor: {r: 0.20369065, g: 1, b: 0, a: 0}
+  pushLazerColor: {r: 0.1728818, g: 0.72156864, b: 0.990566, a: 1}
+  pullLazerColor: {r: 0.9433962, g: 0.21960784, b: 0.20392157, a: 1}
+  minLazerColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0.5254902}
   PushParticlePrefab: {fileID: 5705192553503730445, guid: c1d0e4814594d78438cb60f5b2f81a72, type: 3}
   PullParticlePrefab: {fileID: 5705192553503730445, guid: 7f6e8715877f0cb44b14b3a5f7d70577, type: 3}
 --- !u!114 &7804458033350431323
@@ -594,6 +596,38 @@ PrefabInstance:
     - target: {fileID: 6247451735344873485, guid: 11f7640fd01a18044b06a92c0025e2e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542587324581967348, guid: 11f7640fd01a18044b06a92c0025e2e9, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542587324581967348, guid: 11f7640fd01a18044b06a92c0025e2e9, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542587324581967348, guid: 11f7640fd01a18044b06a92c0025e2e9, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542587324581967348, guid: 11f7640fd01a18044b06a92c0025e2e9, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542587324581967348, guid: 11f7640fd01a18044b06a92c0025e2e9, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542587324581967348, guid: 11f7640fd01a18044b06a92c0025e2e9, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542587324581967348, guid: 11f7640fd01a18044b06a92c0025e2e9, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8542587324581967348, guid: 11f7640fd01a18044b06a92c0025e2e9, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
