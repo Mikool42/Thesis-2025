@@ -47,12 +47,12 @@ public class MovableObjectTargetColorSwitch : MonoBehaviour
         if (isTarget)
         {
             SetMaterialBool(abilityType, 1);
-            if (hasOutline) SetOutlineBool(1);
+            //if (hasOutline) SetOutlineBool(1);
         }
         else
         {
             SetMaterialBool(abilityType, 0);
-            if (hasOutline) SetOutlineBool(0);
+            //if (hasOutline) SetOutlineBool(0);
         }
     }
 

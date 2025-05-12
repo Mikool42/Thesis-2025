@@ -157,6 +157,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
         {
             target = viableTargets[indexOfTargetInSortedList + 1]; // set the target as the next target above
         }
+        Debug.Log(target);
         target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true, pab.GetPlayerAbility());
 
         RenderLineOnTarget();
@@ -170,6 +171,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
         }
 
         target = null;
+
+        RenderLineOnTarget();
     }
     
     private void OnTargetLessThanMinRange()
@@ -197,7 +200,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
         GameObject _tar = target;
         MovableObjectTargetColorSwitch mov = target.GetComponent<MovableObjectTargetColorSwitch>();
-        if (mov.IsSeperateIndicator()) _tar = mov.GetSeperateIndicator();
+        if (mov && mov.IsSeperateIndicator()) _tar = mov.GetSeperateIndicator();
 
         var points = new Vector3[2];
         points[0] = transform.position;
