@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private PlayerAbilityTargeting pat;
     private Vector3 m_Move;
+    private bool m_Jump = false;
     private Vector3 m_Rotation;
 
     void Start()
@@ -44,13 +45,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
+        Debug.Log("in OnMove");
         m_Move = value.Get<Vector3>();
     }
 
     private void Move(Vector3 direction)
     {
+        Debug.Log(direction);
         if (direction.sqrMagnitude < 0.01)
             return;
+        Debug.Log(direction);
         var scaledMoveSpeed = moveSpeed * Time.fixedDeltaTime;
         var move = Quaternion.Euler(0, 0, 0) * direction;
 
@@ -62,12 +66,26 @@ public class PlayerMovement : MonoBehaviour
     
     public void OnJump()
     {
-        SoundManager.PlaySound(SoundType.JUMP);
-
         if (FDScript != null && FDScript.GetIsGrounded())
         {
+            SoundManager.PlaySound(SoundType.JUMP);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             FDScript.JustJumped();
         }
+    }
+
+    public Vector3 GetMoveVector()
+    {
+        return m_Move;
+    }
+
+    public bool GetJumpBool()
+    {
+        return m_Jump;
+    }
+
+    public void SetJumpBool(bool _jump)
+    {
+        m_Jump = _jump;
     }
 }

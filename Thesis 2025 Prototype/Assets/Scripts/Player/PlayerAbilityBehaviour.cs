@@ -42,13 +42,13 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     [Tooltip("Reference to Player ability targeting script")]
     [SerializeField] PlayerAbilityTargeting pat;
 
-    [Header("Player mesh")]
-    [Tooltip("Reference to player mesh")]
-    [SerializeField] MeshRenderer playerMesh;
-    [Tooltip("Player Pull Material")]
-    [SerializeField] private Material pullMaterial;
-    [Tooltip("Player Push Material")]
-    [SerializeField] private Material pushMaterial;
+    [Header("Player Models")]
+    [Tooltip("Reference to the pill player model")]
+    [SerializeField] GameObject playerModelPull;
+    [Tooltip("Reference to the pill player model")]
+    [SerializeField] GameObject playerModelPush;
+
+    private GameObject playerModelInUse;
 
 
     private PowerHUDScript _powerHUDScript;
@@ -235,7 +235,9 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     {
         if (abilityType == AbilityType.PULL)
         {
-            playerMesh.material = pullMaterial;
+            playerModelInUse = playerModelPull;
+            playerModelPull.SetActive(true);
+            playerModelPush.SetActive(false);
 
             forceAmount_L1 = Mathf.Abs(forceAmount_L1) * -1;
             forceAmount_L2 = Mathf.Abs(forceAmount_L2) * -1;
@@ -243,7 +245,9 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         }
         else if (abilityType == AbilityType.PUSH)
         {
-            playerMesh.material = pushMaterial;
+            playerModelInUse = playerModelPush;
+            playerModelPush.SetActive(true);
+            playerModelPull.SetActive(false);
 
             forceAmount_L1 = Mathf.Abs(forceAmount_L1);
             forceAmount_L2 = Mathf.Abs(forceAmount_L2);

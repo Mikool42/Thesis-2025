@@ -6,6 +6,13 @@ public class FloorDetection : MonoBehaviour
     [SerializeField] private bool isGrounded = false;
     private List<GameObject> currentGroundObjects = new List<GameObject>(); // used to hinder player becoming not grounded while grounded
 
+    private PlayerMovement pm;
+
+    void Start()
+    {
+        pm = transform.parent.gameObject.GetComponent<PlayerMovement>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         /*string objTag = other.gameObject.tag;
@@ -15,6 +22,7 @@ public class FloorDetection : MonoBehaviour
         }*/
         isGrounded = true;
         currentGroundObjects.Add(other.gameObject);
+        pm.SetJumpBool(false);
 
         //Debug.Log(objTag);
     }
