@@ -19,15 +19,15 @@ public class SplitScreenManager : MonoBehaviour
         // Adjust viewports based on merge ratio
         if (mergeRatio < 1)
         {
-            // Split view
-            player1Camera.rect = new Rect(0, 0, splitViewSize, 1);
-            player2Camera.rect = new Rect(splitViewSize, 0, splitViewSize, 1);
-        }
-        else
-        {
             // Merged view (full screen)
             player1Camera.rect = new Rect(0, 0, 1, 1);
             player2Camera.rect = new Rect(0, 0, 1, 1);
+        }
+        else
+        {
+            // Split view
+            player1Camera.rect = new Rect(0, 0, splitViewSize, 1);
+            player2Camera.rect = new Rect(splitViewSize, 0, splitViewSize, 1);
         }
     }
 }
