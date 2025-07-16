@@ -1,38 +1,48 @@
+using Unity.Cinemachine;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerManager : MonoBehaviour
 {
 
     private PowerHUDScript _powerHUDScript;
 
+    public GameObject playerFollowerOne;
+    public GameObject playerFollowerTwo;
+
     public void OnPlayerJoined()
     {
-        //FindingPowerHUDScript();
-
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] cameras = GameObject.FindGameObjectsWithTag("Camera");
 
         if (players.Length == 1)
         {
-            //_powerHUDScript.AddPlayerToHud(players[0]);
 
             players[0].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PUSH);
-            //_powerHUDScript.ChangeAbilityType(players[0], PlayerAbilityBehaviour.AbilityType.PUSH);
+            players[0].GetComponent<PlayerAbilityTargeting>().SetPlayerCamera(cameras[0].GetComponent<Camera>());
+            playerFollowerOne.transform.SetParent(players[0].transform);
 
         }
         else if (players.Length == 2)
         {
-            //_powerHUDScript.AddPlayerToHud(players[0]);
-            //_powerHUDScript.AddPlayerToHud(players[1]);
 
             if (players[0].GetComponent<PlayerAbilityBehaviour>().GetPlayerAbility() == PlayerAbilityBehaviour.AbilityType.PUSH)
             {
+                players[0].GetComponent<PlayerAbilityTargeting>().SetPlayerCamera(cameras[0].GetComponent<Camera>());
+                playerFollowerOne.transform.SetParent(players[0].transform);
+
                 players[1].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PULL);
-                //_powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PULL);
+                players[1].GetComponent<PlayerAbilityTargeting>().SetPlayerCamera(cameras[1].GetComponent<Camera>());
+                playerFollowerTwo.transform.SetParent(players[1].transform);
             }
             else
             {
+                players[0].GetComponent<PlayerAbilityTargeting>().SetPlayerCamera(cameras[0].GetComponent<Camera>());
+                playerFollowerOne.transform.SetParent(players[0].transform);
+
                 players[1].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PUSH);
-                //_powerHUDScript.ChangeAbilityType(players[1], PlayerAbilityBehaviour.AbilityType.PUSH);
+                players[1].GetComponent<PlayerAbilityTargeting>().SetPlayerCamera(cameras[1].GetComponent<Camera>());
+                playerFollowerTwo.transform.SetParent(players[1].transform);
             }
         }
         else
@@ -44,7 +54,6 @@ public class PlayerManager : MonoBehaviour
     public void SwitchPlayerAbility()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log("in player Ability switch");
 
         if (players.Length == 1)
         {
