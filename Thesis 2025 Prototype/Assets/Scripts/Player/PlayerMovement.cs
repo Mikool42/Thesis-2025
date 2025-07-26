@@ -25,10 +25,14 @@ public class PlayerMovement : MonoBehaviour
     private bool m_Jump = false;
     private Vector3 m_Rotation;
 
+    private TutorialPopupController tpc;
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         pat = gameObject.GetComponent<PlayerAbilityTargeting>();
+
+        tpc = GameObject.FindGameObjectWithTag("TutorialPopupController").GetComponent<TutorialPopupController>();
     }
 
     void FixedUpdate()
@@ -68,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
             SoundManager.PlaySound(SoundType.JUMP);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             FDScript.JustJumped();
+
+            tpc.AButtonPressed(gameObject);
         }
     }
 

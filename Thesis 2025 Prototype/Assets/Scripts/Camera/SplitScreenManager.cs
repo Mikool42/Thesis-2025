@@ -28,6 +28,7 @@ public class SplitScreenManager : MonoBehaviour
         }
         else
         {
+            playerGroupCamera.GetComponent<Camera>().enabled = false;
             // Split view
             player1Camera.rect = new Rect(0, 0, splitViewSize, 1);
             player2Camera.rect = new Rect(splitViewSize, 0, splitViewSize, 1);
