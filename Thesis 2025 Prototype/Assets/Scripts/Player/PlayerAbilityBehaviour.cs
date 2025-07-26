@@ -77,7 +77,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnFireStart()
     {
-        tpc.BButtonPressed();
+        tpc.BButtonPressed(gameObject);
 
         abilityTarget = pat.GetTarget();
         if (abilityTarget == null) return;
@@ -125,7 +125,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnTargetLevelSwitch()
     {
-        tpc.AnyButtonPressed();
+        tpc.AnyButtonPressed(gameObject);
 
         if (abilityLevel == ForceLevel.L1)
         {
@@ -153,7 +153,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnAOETrigger()
     {
-        tpc.AnyButtonPressed();
+        tpc.AnyButtonPressed(gameObject);
 
         if (!isFiringAoe) PlayPullPushSound();
 
@@ -203,7 +203,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     private void UpdateForceType()
     {
-        tpc.AnyButtonPressed();
+        tpc.AnyButtonPressed(gameObject);
 
         if (abilityLevel == ForceLevel.L1) currentAbilityForceType = forceType_L1;
         else if (abilityLevel == ForceLevel.L2) currentAbilityForceType = forceType_L2;

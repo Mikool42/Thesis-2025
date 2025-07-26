@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             FDScript.JustJumped();
 
-            tpc.AButtonPressed();
+            tpc.AButtonPressed(gameObject);
         }
     }
 

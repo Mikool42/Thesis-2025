@@ -111,22 +111,18 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
     public void OnTargetLeft()
     {
-        tpc.ShoulderButtonPressed();
+        tpc.ShoulderButtonPressed(gameObject);
 
         if (target != null)
         {
-            Debug.Log("target is not null");
             target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false, pab.GetPlayerAbility());
         }
 
         if (viableTargets.Count == 0) 
         {
-            Debug.Log("targetcount is zero");
             target = null;
             return; 
         }
-
-        Debug.Log("in target left");
 
         int indexOfTargetInSortedList = viableTargets.IndexOf(target);
         if (indexOfTargetInSortedList == -1) { indexOfTargetInSortedList = 0; }
@@ -146,7 +142,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
     
     public void OnTargetRight()
     {
-        tpc.ShoulderButtonPressed();
+        tpc.ShoulderButtonPressed(gameObject);
 
         if (target != null)
         {
@@ -170,7 +166,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
         {
             target = viableTargets[indexOfTargetInSortedList + 1]; // set the target as the next target above
         }
-        Debug.Log(target);
+
         target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true, pab.GetPlayerAbility());
 
         RenderLineOnTarget();
@@ -205,8 +201,6 @@ public class PlayerAbilityTargeting : MonoBehaviour
             lr.enabled = false;
             return;
         }
-
-        Debug.Log("rendering line");
 
         lr.enabled = true;
 
