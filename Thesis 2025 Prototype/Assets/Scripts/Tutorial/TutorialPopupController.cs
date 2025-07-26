@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEditor.PackageManager;
@@ -18,7 +19,7 @@ public struct popupIteration
 {
     public Sprite popupImage;
     public ButtonDismissPresses buttonToDismissPopup;
-    public int secondsToTrigger;
+    public float secondsToTrigger;
 }
 
 public class TutorialPopupController : MonoBehaviour
@@ -29,6 +30,7 @@ public class TutorialPopupController : MonoBehaviour
     public Image group;
 
     [SerializeField] private List<popupIteration> popupIterationsOne = new List<popupIteration>();
+    private List<popupIteration> currentIterationList = null;
     private int popupIterator = 0;
 
     private bool waitingForAPress = false;
@@ -48,9 +50,11 @@ public class TutorialPopupController : MonoBehaviour
 
     public void TriggerPopup(List<popupIteration> popupIterations)
     {
+        currentIterationList = popupIterations;
+
         popupIterator = 0;
 
-        popupIteration curr = popupIterations[popupIterator];
+        popupIteration curr = currentIterationList[popupIterator];
 
         InstantiateCanvasPopup(curr.popupImage);
 
@@ -58,31 +62,59 @@ public class TutorialPopupController : MonoBehaviour
         
     }
 
+    private void TriggerNextIteration()
+    {
+        Debug.Log("in next trigger");
+        if (currentIterationList.Count <= popupIterator) return;
+
+        popupIteration curr = currentIterationList[popupIterator];
+
+        InstantiateCanvasPopup(curr.popupImage);
+
+        WaitForResponse(curr.buttonToDismissPopup);
+    }
+
+    private void StartCountdownForNextPopup()
+    {
+        popupIteration curr = currentIterationList[popupIterator];
+
+        popupIterator++;
+
+        IEnumerator coroutine = CountdownToNextPopup(curr.secondsToTrigger);
+        StartCoroutine(coroutine);
+    }
+
     public void AButtonPressed(GameObject _playerThatPressed)
     {
+        AnyButtonPressed(_playerThatPressed);
         if (!waitingForAPress) return;
 
         if(RemoveCanvasPopup(_playerThatPressed))
         {
             waitingForAPress = false;
+            StartCountdownForNextPopup();
         }
     }
     public void BButtonPressed(GameObject _playerThatPressed)
     {
+        AnyButtonPressed(_playerThatPressed);
         if (!waitingForBPress) return;
 
         if(RemoveCanvasPopup(_playerThatPressed))
         {
             waitingForBPress = false;
+            StartCountdownForNextPopup();
         }
     }
     public void ShoulderButtonPressed(GameObject _playerThatPressed)
     {
+        AnyButtonPressed(_playerThatPressed);
         if (!waitingForShoulderPress) return;
 
         if(RemoveCanvasPopup(_playerThatPressed))
         {
             waitingForShoulderPress = false;
+            StartCountdownForNextPopup();
         }
     }
     public void AnyButtonPressed(GameObject _playerThatPressed)
@@ -92,6 +124,7 @@ public class TutorialPopupController : MonoBehaviour
         if (RemoveCanvasPopup(_playerThatPressed))
         {
             waitingForAnyPress = false;
+            StartCountdownForNextPopup();
         }
     }
 
@@ -140,13 +173,11 @@ public class TutorialPopupController : MonoBehaviour
 
         if (followerOne != null && followerOne.gameObject.name == "PlayerFollower1")
         {
-            Debug.Log("player one dismissed");
             player1.gameObject.SetActive(false);
             playerOneHasDismissed = true;
         }
         else if (followerTwo != null && followerTwo.gameObject.name == "PlayerFollower2")
         {
-            Debug.Log("player two dismissed");
             player2.gameObject.SetActive(false);
             playerTwoHasDismissed = true;
         }
@@ -171,5 +202,12 @@ public class TutorialPopupController : MonoBehaviour
         }
 
         return false;
+    }
+
+    IEnumerator CountdownToNextPopup(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        //Start next iteration
+        TriggerNextIteration();
     }
 }

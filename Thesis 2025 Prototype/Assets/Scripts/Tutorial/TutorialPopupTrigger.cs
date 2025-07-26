@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ public class TutorialPopupTrigger : MonoBehaviour
 {
     private TutorialPopupController tpc;
 
-    [SerializeField] GameObject popupPrefab;
+    [SerializeField] private List<popupIteration> popupSequence = new List<popupIteration>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,8 +16,8 @@ public class TutorialPopupTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (popupPrefab == null || other.gameObject.tag != "Player") return;
+        if (popupSequence == null || other.gameObject.tag != "Player") return;
 
-        //tpc.TriggerPopup(popupPrefab);
+        tpc.TriggerPopup(popupSequence);
     }
 }
