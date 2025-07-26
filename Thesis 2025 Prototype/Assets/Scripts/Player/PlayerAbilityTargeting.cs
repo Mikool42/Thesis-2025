@@ -59,6 +59,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
     private PlayerAbilityBehaviour pab;
 
+    private TutorialPopupController tpc;
+
     void Start()
     {
         cam = Camera.main;
@@ -75,6 +77,9 @@ public class PlayerAbilityTargeting : MonoBehaviour
         RenderLineOnTarget();
         StartCoroutine(CheckObjects(targetFindingDelay));
         InstantiateParticles();
+
+        tpc = GameObject.FindGameObjectWithTag("TutorialPopupController").GetComponent<TutorialPopupController>();
+
     }
 
     void Update()
@@ -106,16 +111,22 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
     public void OnTargetLeft()
     {
+        tpc.ShoulderButtonPressed();
+
         if (target != null)
         {
+            Debug.Log("target is not null");
             target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false, pab.GetPlayerAbility());
         }
 
         if (viableTargets.Count == 0) 
         {
+            Debug.Log("targetcount is zero");
             target = null;
             return; 
         }
+
+        Debug.Log("in target left");
 
         int indexOfTargetInSortedList = viableTargets.IndexOf(target);
         if (indexOfTargetInSortedList == -1) { indexOfTargetInSortedList = 0; }
@@ -135,6 +146,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
     
     public void OnTargetRight()
     {
+        tpc.ShoulderButtonPressed();
+
         if (target != null)
         {
             target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false, pab.GetPlayerAbility());
@@ -193,6 +206,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
             return;
         }
 
+        Debug.Log("rendering line");
+
         lr.enabled = true;
 
         if (isTooClose) SetLazerMaterialBool(lr, 1);
@@ -236,23 +251,23 @@ public class PlayerAbilityTargeting : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
 
-            if (cam != null)
+
+            GameObject[] movableObjects = GameObject.FindGameObjectsWithTag("MovableObject");
+            viableTargets.Clear();
+
+            foreach (GameObject movObj in movableObjects)
             {
-                GameObject[] movableObjects = GameObject.FindGameObjectsWithTag("MovableObject");
-                viableTargets.Clear();
-
-                foreach (GameObject movObj in movableObjects)
+                //Vector3 viewPos = cam.WorldToViewportPoint(movObj.transform.position);
+                float dist = Vector3.Distance(transform.position, movObj.transform.position);
+                //if (dist <= targettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
+                if (dist <= targettingRadius)
                 {
-                    Vector3 viewPos = cam.WorldToViewportPoint(movObj.transform.position);
-                    float dist = Vector3.Distance(transform.position, movObj.transform.position);
-                    if (dist <= targettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
-                    {
-                        viableTargets.Add(movObj);
-                    }
+                    viableTargets.Add(movObj);
                 }
-
-                viableTargets = SortByPosX(viableTargets);
             }
+
+            viableTargets = SortByPosX(viableTargets);
+
         }
     }
 
