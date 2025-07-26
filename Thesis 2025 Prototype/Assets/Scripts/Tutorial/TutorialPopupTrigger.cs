@@ -8,6 +8,8 @@ public class TutorialPopupTrigger : MonoBehaviour
 
     [SerializeField] private List<popupIteration> popupSequence = new List<popupIteration>();
 
+    private bool hasBeenTriggered = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,8 +18,10 @@ public class TutorialPopupTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (hasBeenTriggered) return;
         if (popupSequence == null || other.gameObject.tag != "Player") return;
 
+        hasBeenTriggered = true;
         tpc.TriggerPopup(popupSequence);
     }
 }
