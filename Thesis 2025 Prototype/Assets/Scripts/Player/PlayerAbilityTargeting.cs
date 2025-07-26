@@ -236,20 +236,23 @@ public class PlayerAbilityTargeting : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
 
-            GameObject[] movableObjects = GameObject.FindGameObjectsWithTag("MovableObject");
-            viableTargets.Clear();
-
-            foreach (GameObject movObj in movableObjects)
+            if (cam != null)
             {
-                Vector3 viewPos = cam.WorldToViewportPoint(movObj.transform.position);
-                float dist = Vector3.Distance(transform.position, movObj.transform.position);
-                if (dist <= targettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
-                {
-                    viableTargets.Add(movObj);
-                }
-            }
+                GameObject[] movableObjects = GameObject.FindGameObjectsWithTag("MovableObject");
+                viableTargets.Clear();
 
-            viableTargets = SortByPosX(viableTargets);
+                foreach (GameObject movObj in movableObjects)
+                {
+                    Vector3 viewPos = cam.WorldToViewportPoint(movObj.transform.position);
+                    float dist = Vector3.Distance(transform.position, movObj.transform.position);
+                    if (dist <= targettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
+                    {
+                        viableTargets.Add(movObj);
+                    }
+                }
+
+                viableTargets = SortByPosX(viableTargets);
+            }
         }
     }
 
@@ -372,5 +375,10 @@ public class PlayerAbilityTargeting : MonoBehaviour
     private void SetLazerMaterialColor(LineRenderer _lr, Color _color) //false = 0, true = 1
     {
         _lr.material.SetColor("_BaseColor", _color);
+    }
+
+    public void SetPlayerCamera(Camera _camera)
+    {
+        cam = _camera;
     }
 }

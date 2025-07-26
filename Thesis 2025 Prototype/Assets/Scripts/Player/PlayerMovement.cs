@@ -45,16 +45,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
-        Debug.Log("in OnMove");
         m_Move = value.Get<Vector3>();
     }
 
     private void Move(Vector3 direction)
     {
-        Debug.Log(direction);
         if (direction.sqrMagnitude < 0.01)
             return;
-        Debug.Log(direction);
         var scaledMoveSpeed = moveSpeed * Time.fixedDeltaTime;
         var move = Quaternion.Euler(0, 0, 0) * direction;
 
