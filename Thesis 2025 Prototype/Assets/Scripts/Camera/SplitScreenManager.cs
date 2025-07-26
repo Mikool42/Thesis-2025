@@ -6,6 +6,8 @@ public class SplitScreenManager : MonoBehaviour
     public Transform player2;
     public Camera player1Camera;
     public Camera player2Camera;
+    public Camera playerGroupCamera;
+
     public float mergeDistance = 5f;
     private float splitViewSize = 0.5f; // Half screen for each player
 
@@ -19,9 +21,10 @@ public class SplitScreenManager : MonoBehaviour
         // Adjust viewports based on merge ratio
         if (mergeRatio < 1)
         {
+            playerGroupCamera.GetComponent<Camera>().enabled = true;
             // Merged view (full screen)
-            player1Camera.rect = new Rect(0, 0, 1, 1);
-            player2Camera.rect = new Rect(0, 0, 1, 1);
+            player1Camera.rect = new Rect(0, 0, 0, 1);
+            player2Camera.rect = new Rect(0, 0, 0, 1);
         }
         else
         {
