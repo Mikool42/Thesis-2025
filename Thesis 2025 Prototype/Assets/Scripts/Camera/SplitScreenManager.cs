@@ -11,8 +11,18 @@ public class SplitScreenManager : MonoBehaviour
     public float mergeDistance = 5f;
     private float splitViewSize = 0.5f; // Half screen for each player
 
+    private bool takeoverInProgress = false;
+
     void Update()
     {
+        if (takeoverInProgress)
+        {
+            playerGroupCamera.GetComponent<Camera>().enabled = false;
+            // Merged view (full screen)
+            player1Camera.rect = new Rect(0, 0, 0, 1);
+            player2Camera.rect = new Rect(0, 0, 0, 1);
+            return;
+        }
         if (player1 == null || player2 == null) return;
 
         float distance = Vector3.Distance(player1.position, player2.position);
@@ -33,5 +43,15 @@ public class SplitScreenManager : MonoBehaviour
             player1Camera.rect = new Rect(0, 0, splitViewSize, 1);
             player2Camera.rect = new Rect(splitViewSize, 0, splitViewSize, 1);
         }
+    }
+
+    public void Takeover()
+    {
+        takeoverInProgress = true;
+    }
+
+    public void ReleaseTakeover()
+    {
+        takeoverInProgress = false;
     }
 }
