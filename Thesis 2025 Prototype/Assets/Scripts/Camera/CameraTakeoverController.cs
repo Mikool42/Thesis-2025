@@ -8,6 +8,7 @@ public class CameraTakeoverController : MonoBehaviour
     //[SerializeField] private Camera _camera;
     [SerializeField] private CinemachineCamera playerGroupCamera;
     [SerializeField] private CinemachineCamera cinemachineCamera;
+    [SerializeField] private CameraSplinePath splinePath;
     [SerializeField] private SplitScreenManager splitScreenManager;
 
     [SerializeField] private Transform targetTransform;
@@ -16,10 +17,13 @@ public class CameraTakeoverController : MonoBehaviour
 
     private Transform _targetTransform;
 
-    private void Awake()
-    {
-        _targetTransform = targetTransform;
-    }
+    private GameObject playerOneEntered = null;
+    private GameObject playerTwoEntered = null;
+
+    //private void Awake()
+    //{
+    //    _targetTransform = targetTransform;
+    //}
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,24 +31,51 @@ public class CameraTakeoverController : MonoBehaviour
         cinemachineCamera.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     private void OnTriggerEnter(Collider other)
     {
-        cinemachineCamera.gameObject.SetActive(true);
-        splitScreenManager.Takeover(); //Makes sure theres only one screen and no split screen
-        Debug.Log(_targetTransform.position);
-        Debug.Log(other.gameObject.transform.position);
-        StartCoroutine(TransitionToTakeover(_targetTransform, other.gameObject.transform));
+        if (other.gameObject.tag != "Player") return;
+        if (playerOneEntered == null)
+        {
+            playerOneEntered = other.gameObject;
+        }
+        else
+        {
+            playerTwoEntered = other.gameObject;
+        }
 
+        if (playerOneEntered != null && playerTwoEntered != null)
+        {
+            Debug.Log("camera takeover triggered");
+
+            cinemachineCamera.gameObject.SetActive(true);
+            splitScreenManager.Takeover(); //Makes sure theres only one screen and no split screen
+
+            //StartCoroutine(TransitionToTakeover(_targetTransform, other.gameObject.transform));
+
+            splinePath.StartTransitionToSpline();
+        }
     }
 
     private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag != "Player") return;
+        if (playerOneEntered == null)
+        {
+            playerTwoEntered = null;
+        }
+        else
+        {
+            playerOneEntered = null;
+        }
+
+        if (playerOneEntered == null && playerTwoEntered == null)
+        {
+            splinePath.StartTransitionFromSpline();
+        }
+    }
+
+    public void StopTakeover()
     {
         cinemachineCamera.gameObject.SetActive(false);
         splitScreenManager.ReleaseTakeover(); //Releases control over split screen manager
