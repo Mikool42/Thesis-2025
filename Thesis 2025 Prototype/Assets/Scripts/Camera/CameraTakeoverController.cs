@@ -34,6 +34,12 @@ public class CameraTakeoverController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        cinemachineCamera.gameObject.SetActive(true);
+        splitScreenManager.Takeover(); //Makes sure theres only one screen and no split screen
+
+        //StartCoroutine(TransitionToTakeover(_targetTransform, other.gameObject.transform));
+
+        splinePath.StartTransitionToSpline();
         if (other.gameObject.tag != "Player") return;
         if (playerOneEntered == null)
         {
