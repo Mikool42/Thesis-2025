@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -15,10 +16,18 @@ public class CameraTakeoverController : MonoBehaviour
 
     [SerializeField] private float transitionTime = 5.0f;
 
+    [SerializeField] private Collider boxColliderOne;
+    [SerializeField] private Collider boxColliderTwo;
+
     private Transform _targetTransform;
 
     private GameObject playerOneEntered = null;
     private GameObject playerTwoEntered = null;
+
+    private bool splineHasBeenTriggered = false;
+    private bool splineHasBeenExited = false;
+
+    private List<GameObject> colliderList = new List<GameObject>();
 
     //private void Awake()
     //{
@@ -35,43 +44,40 @@ public class CameraTakeoverController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag != "Player") return;
-        if (playerOneEntered == null)
-        {
-            playerOneEntered = other.gameObject;
-        }
-        else
-        {
-            playerTwoEntered = other.gameObject;
-        }
+        
+        colliderList.Add(other.gameObject);
 
-        if (playerOneEntered != null && playerTwoEntered != null)
+        if (colliderList.Count >= 2 && !splineHasBeenTriggered)
         {
-            Debug.Log("camera takeover triggered");
 
             cinemachineCamera.gameObject.SetActive(true);
             splitScreenManager.Takeover(); //Makes sure theres only one screen and no split screen
 
-            //StartCoroutine(TransitionToTakeover(_targetTransform, other.gameObject.transform));
-
             splinePath.StartTransitionToSpline();
+
+            splineHasBeenTriggered = true;
+            splineHasBeenExited = false;
+
+            
+            
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag != "Player") return;
-        if (playerOneEntered == null)
-        {
-            playerTwoEntered = null;
-        }
-        else
-        {
-            playerOneEntered = null;
-        }
 
-        if (playerOneEntered == null && playerTwoEntered == null)
+        colliderList.Remove(other.gameObject);
+
+        if (colliderList.Count == 0)
         {
+
+
             splinePath.StartTransitionFromSpline();
+                
+            splineHasBeenExited = true;
+            splineHasBeenTriggered = false;
+
         }
     }
 
