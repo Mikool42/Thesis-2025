@@ -81,7 +81,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnFireStart()
     {
-        //tpc.BButtonPressed(gameObject);
+        tpc.AnyButtonPressed(gameObject);
 
         if (!isFiring) PlayPullPushSound();
 
@@ -121,7 +121,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void NewOnFireStart()
     {
-        Debug.Log("In new movable object script");
+        tpc.AnyButtonPressed(gameObject);
+
         if (!isFiring) PlayPullPushSound();
 
         isFiring = true;
@@ -224,7 +225,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     private void UpdateForceType()
     {
-        //tpc.AnyButtonPressed(gameObject);
+        tpc.AnyButtonPressed(gameObject);
 
         if (abilityLevel == ForceLevel.L1) currentAbilityForceType = forceType_L1;
         else if (abilityLevel == ForceLevel.L2) currentAbilityForceType = forceType_L2;
