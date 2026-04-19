@@ -136,8 +136,12 @@ public class PlayerAbilityBehaviour : MonoBehaviour
         if (abilityLevel == ForceLevel.L2) { fLVL = 1; }
         if (abilityLevel == ForceLevel.L3) { fLVL = 2; }
 
+        int pushPullMult = 0;
+        if (abilityType == AbilityType.PULL) pushPullMult = -1;
+        if (abilityType == AbilityType.PUSH) pushPullMult = 1;
+
         NewMovableObject NMO = abilityTarget?.GetComponent<NewMovableObject>();
-        NMO.ApplyForceToObject(Vector3.Normalize(abilityTarget.transform.position - transform.position), fLVL);
+        NMO.ApplyForceToObject(Vector3.Normalize(abilityTarget.transform.position - transform.position), fLVL, pushPullMult);
     }
 
     public void OnFireStop()
