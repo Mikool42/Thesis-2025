@@ -59,6 +59,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
     private PlayerAbilityBehaviour pab;
 
+    private TutorialPopupController tpc;
+
     void Start()
     {
         cam = Camera.main;
@@ -75,6 +77,9 @@ public class PlayerAbilityTargeting : MonoBehaviour
         RenderLineOnTarget();
         StartCoroutine(CheckObjects(targetFindingDelay));
         InstantiateParticles();
+
+        tpc = GameObject.FindGameObjectWithTag("TutorialPopupController").GetComponent<TutorialPopupController>();
+
     }
 
     void Update()
@@ -106,6 +111,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
 
     public void OnTargetLeft()
     {
+        tpc.ShoulderButtonPressed(gameObject);
+
         if (target != null)
         {
             target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false, pab.GetPlayerAbility());
@@ -135,6 +142,8 @@ public class PlayerAbilityTargeting : MonoBehaviour
     
     public void OnTargetRight()
     {
+        tpc.ShoulderButtonPressed(gameObject);
+
         if (target != null)
         {
             target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(false, pab.GetPlayerAbility());
@@ -157,7 +166,7 @@ public class PlayerAbilityTargeting : MonoBehaviour
         {
             target = viableTargets[indexOfTargetInSortedList + 1]; // set the target as the next target above
         }
-        Debug.Log(target);
+
         target.GetComponent<MovableObjectTargetColorSwitch>().SetAsTarget(true, pab.GetPlayerAbility());
 
         RenderLineOnTarget();
@@ -236,20 +245,23 @@ public class PlayerAbilityTargeting : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
 
+
             GameObject[] movableObjects = GameObject.FindGameObjectsWithTag("MovableObject");
             viableTargets.Clear();
 
             foreach (GameObject movObj in movableObjects)
             {
-                Vector3 viewPos = cam.WorldToViewportPoint(movObj.transform.position);
+                //Vector3 viewPos = cam.WorldToViewportPoint(movObj.transform.position);
                 float dist = Vector3.Distance(transform.position, movObj.transform.position);
-                if (dist <= targettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
+                //if (dist <= targettingRadius && viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0)
+                if (dist <= targettingRadius)
                 {
                     viableTargets.Add(movObj);
                 }
             }
 
             viableTargets = SortByPosX(viableTargets);
+
         }
     }
 
@@ -372,5 +384,10 @@ public class PlayerAbilityTargeting : MonoBehaviour
     private void SetLazerMaterialColor(LineRenderer _lr, Color _color) //false = 0, true = 1
     {
         _lr.material.SetColor("_BaseColor", _color);
+    }
+
+    public void SetPlayerCamera(Camera _camera)
+    {
+        cam = _camera;
     }
 }

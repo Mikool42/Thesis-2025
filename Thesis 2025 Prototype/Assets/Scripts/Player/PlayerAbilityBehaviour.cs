@@ -50,13 +50,16 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     private GameObject playerModelInUse;
 
-
     private PowerHUDScript _powerHUDScript;
+
+    private TutorialPopupController tpc;
 
     void Start()
     {
         UpdateForceAccordingToAbility();
         pat.ChangeLineThickness(0.3f);
+
+        tpc = GameObject.FindGameObjectWithTag("TutorialPopupController").GetComponent<TutorialPopupController>();
     }
 
     // Update is called once per frame
@@ -74,6 +77,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnFireStart()
     {
+        tpc.BButtonPressed(gameObject);
+
         abilityTarget = pat.GetTarget();
         if (abilityTarget == null) return;
 
@@ -120,6 +125,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnTargetLevelSwitch()
     {
+        tpc.AnyButtonPressed(gameObject);
+
         if (abilityLevel == ForceLevel.L1)
         {
             abilityLevel = ForceLevel.L2;
@@ -146,6 +153,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnAOETrigger()
     {
+        tpc.AnyButtonPressed(gameObject);
+
         if (!isFiringAoe) PlayPullPushSound();
 
         isFiringAoe = true;
@@ -194,6 +203,8 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     private void UpdateForceType()
     {
+        tpc.AnyButtonPressed(gameObject);
+
         if (abilityLevel == ForceLevel.L1) currentAbilityForceType = forceType_L1;
         else if (abilityLevel == ForceLevel.L2) currentAbilityForceType = forceType_L2;
         else if (abilityLevel == ForceLevel.L3) currentAbilityForceType = forceType_L3;
