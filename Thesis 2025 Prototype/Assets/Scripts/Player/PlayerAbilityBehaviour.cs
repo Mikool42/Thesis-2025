@@ -65,9 +65,13 @@ public class PlayerAbilityBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        abilityTarget = pat.GetTarget();
+        if (abilityTarget == null) return;
+
         if (isFiring && (currentAbilityForceType == ForceTypes.Force))
         {
-            OnFireStart();
+            if (abilityTarget.GetComponent<NewMovableObject>() != null) NewOnFireStart();
+            else OnFireStart();
         }
         else if (isFiringAoe && (currentAbilityForceType == ForceTypes.Force))
         {
@@ -77,10 +81,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     public void OnFireStart()
     {
-        tpc.BButtonPressed(gameObject);
-
-        abilityTarget = pat.GetTarget();
-        if (abilityTarget == null) return;
+        //tpc.BButtonPressed(gameObject);
 
         if (!isFiring) PlayPullPushSound();
 
@@ -91,11 +92,11 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
         Rigidbody targetRB = null;
 
-        if (abilityTarget.GetComponent<TurnOffDiscMovement>() != null &&
+        if (abilityTarget?.GetComponent<TurnOffDiscMovement>() != null &&
         !abilityTarget.GetComponent<TurnOffDiscMovement>().canMove)
             return;
 
-        targetRB = abilityTarget.GetComponent<Rigidbody>();
+        targetRB = abilityTarget?.GetComponent<Rigidbody>();
 
         if (targetRB != null)
         {
@@ -116,6 +117,26 @@ public class PlayerAbilityBehaviour : MonoBehaviour
                 targetRB.AddForce(appliedForce, ForceMode.Impulse);
             }
         }
+    }
+
+    public void NewOnFireStart()
+    {
+        Debug.Log("In new movable object script");
+        if (!isFiring) PlayPullPushSound();
+
+        isFiring = true;
+
+        if (abilityTarget?.GetComponent<TurnOffDiscMovement>() != null &&
+        !abilityTarget.GetComponent<TurnOffDiscMovement>().canMove)
+            return;
+
+        int fLVL = -1;
+        if (abilityLevel == ForceLevel.L1) { fLVL = 0; }
+        if (abilityLevel == ForceLevel.L2) { fLVL = 1; }
+        if (abilityLevel == ForceLevel.L3) { fLVL = 2; }
+
+        NewMovableObject NMO = abilityTarget?.GetComponent<NewMovableObject>();
+        NMO.ApplyForceToObject(Vector3.Normalize(abilityTarget.transform.position - transform.position), fLVL);
     }
 
     public void OnFireStop()
@@ -203,7 +224,7 @@ public class PlayerAbilityBehaviour : MonoBehaviour
 
     private void UpdateForceType()
     {
-        tpc.AnyButtonPressed(gameObject);
+        //tpc.AnyButtonPressed(gameObject);
 
         if (abilityLevel == ForceLevel.L1) currentAbilityForceType = forceType_L1;
         else if (abilityLevel == ForceLevel.L2) currentAbilityForceType = forceType_L2;
