@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject playerFollowerOne;
     public GameObject playerFollowerTwo;
 
+    public GameObject playerSpawnCube;
+
     public void OnPlayerJoined()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -21,6 +23,11 @@ public class PlayerManager : MonoBehaviour
             players[0].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PUSH);
             players[0].GetComponent<PlayerAbilityTargeting>().SetPlayerCamera(cameras[0].GetComponent<Camera>());
             playerFollowerOne.transform.SetParent(players[0].transform);
+
+            if (playerSpawnCube != null)
+            {
+                players[0].transform.position = playerSpawnCube.transform.position;
+            }
 
         }
         else if (players.Length == 2)
@@ -43,6 +50,11 @@ public class PlayerManager : MonoBehaviour
                 players[1].GetComponent<PlayerAbilityBehaviour>().SetPlayerAbility(PlayerAbilityBehaviour.AbilityType.PUSH);
                 players[1].GetComponent<PlayerAbilityTargeting>().SetPlayerCamera(cameras[1].GetComponent<Camera>());
                 playerFollowerTwo.transform.SetParent(players[1].transform);
+            }
+
+            if (playerSpawnCube != null)
+            {
+                players[1].transform.position = playerSpawnCube.transform.position;
             }
         }
         else
