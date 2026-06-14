@@ -1,0 +1,306 @@
+using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
+using SmallHedge.SoundManager;
+
+public class PlayerAbilityBehaviour : MonoBehaviour
+{
+
+    public enum ForceTypes { Force, Impulse };
+    public enum ForceLevel { L1, L2, L3 };
+    public enum AbilityType { PULL, PUSH };
+
+    [Header("Ability General")]
+    [Tooltip("Which ability type")]
+    [SerializeField] AbilityType abilityType = AbilityType.PULL;
+
+    [Header("Ability")]
+    [Tooltip("How much force to use for level one")]
+    [SerializeField] float forceAmount_L1 = 2f;
+    [Tooltip("What Type of force to use for level one")]
+    [SerializeField] ForceTypes forceType_L1 = ForceTypes.Force;
+    [Tooltip("How much force to use for level two")]
+    [SerializeField] float forceAmount_L2 = 5f;
+    [Tooltip("What Type of force to use for level one")]
+    [SerializeField] ForceTypes forceType_L2 = ForceTypes.Force;
+    [Tooltip("How much force to use for level three")]
+    [SerializeField] float forceAmount_L3 = 10f;
+    [Tooltip("What Type of force to use for level one")]
+    [SerializeField] ForceTypes forceType_L3 = ForceTypes.Force;
+
+    [Tooltip("The amplifier that indicates how much more force is used in AOE compared to targeted (force used in AOE = force used in targeted * amplifier)")]
+    [SerializeField] float AOEForceAmplifier = 2f;
+
+    private ForceTypes currentAbilityForceType = ForceTypes.Force;
+    private ForceLevel abilityLevel = ForceLevel.L1;
+
+    private bool isFiring = false;
+    private bool isFiringAoe = false;
+    private GameObject abilityTarget = null;
+   
+    [Header("Target finding")]
+    [Tooltip("Reference to Player ability targeting script")]
+    [SerializeField] PlayerAbilityTargeting pat;
+
+    [Header("Player Models")]
+    [Tooltip("Reference to the pill player model")]
+    [SerializeField] GameObject playerModelPull;
+    [Tooltip("Reference to the pill player model")]
+    [SerializeField] GameObject playerModelPush;
+
+    private GameObject playerModelInUse;
+
+    private PowerHUDScript _powerHUDScript;
+
+    private TutorialPopupController tpc;
+
+    void Start()
+    {
+        UpdateForceAccordingToAbility();
+        pat.ChangeLineThickness(0.3f);
+
+        tpc = GameObject.FindGameObjectWithTag("TutorialPopupController").GetComponent<TutorialPopupController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        abilityTarget = pat.GetTarget();
+        if (abilityTarget == null) return;
+
+        if (isFiring && (currentAbilityForceType == ForceTypes.Force))
+        {
+            if (abilityTarget.GetComponent<NewMovableObject>() != null) NewOnFireStart();
+            else OnFireStart();
+        }
+        else if (isFiringAoe && (currentAbilityForceType == ForceTypes.Force))
+        {
+            OnAOETrigger();
+        }
+    }
+
+    public void OnFireStart()
+    {
+        tpc.AnyButtonPressed(gameObject);
+
+        if (!isFiring) PlayPullPushSound();
+
+        isFiring = true;
+
+        UpdateForceType();
+
+
+        Rigidbody targetRB = null;
+
+        if (abilityTarget?.GetComponent<TurnOffDiscMovement>() != null &&
+        !abilityTarget.GetComponent<TurnOffDiscMovement>().canMove)
+            return;
+
+        targetRB = abilityTarget?.GetComponent<Rigidbody>();
+
+        if (targetRB != null)
+        {
+            float forceAmount = 0f;
+            if (abilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
+            if (abilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
+            if (abilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
+
+            Vector3 forceDir = Vector3.Normalize(abilityTarget.transform.position - transform.position);
+            Vector3 appliedForce = forceDir * forceAmount;
+
+            if (currentAbilityForceType == ForceTypes.Force)
+            {
+                targetRB.AddForce(appliedForce, ForceMode.Force);
+            }
+            else if (currentAbilityForceType == ForceTypes.Impulse)
+            {
+                targetRB.AddForce(appliedForce, ForceMode.Impulse);
+            }
+        }
+    }
+
+    public void NewOnFireStart()
+    {
+        tpc.AnyButtonPressed(gameObject);
+
+        if (!isFiring) PlayPullPushSound();
+
+        isFiring = true;
+
+        if (abilityTarget?.GetComponent<TurnOffDiscMovement>() != null &&
+        !abilityTarget.GetComponent<TurnOffDiscMovement>().canMove)
+            return;
+
+        int fLVL = -1;
+        if (abilityLevel == ForceLevel.L1) { fLVL = 0; }
+        if (abilityLevel == ForceLevel.L2) { fLVL = 1; }
+        if (abilityLevel == ForceLevel.L3) { fLVL = 2; }
+
+        int pushPullMult = 0;
+        if (abilityType == AbilityType.PULL) pushPullMult = -1;
+        if (abilityType == AbilityType.PUSH) pushPullMult = 1;
+
+        NewMovableObject NMO = abilityTarget?.GetComponent<NewMovableObject>();
+        NMO.ApplyForceToObject(Vector3.Normalize(abilityTarget.transform.position - transform.position), fLVL, pushPullMult);
+    }
+
+    public void OnFireStop()
+    {
+        isFiring = false;
+    }
+
+    public void OnTargetLevelSwitch()
+    {
+        tpc.AnyButtonPressed(gameObject);
+
+        if (abilityLevel == ForceLevel.L1)
+        {
+            abilityLevel = ForceLevel.L2;
+            pat.ChangeLineThickness(0.6f);
+        }
+        else if (abilityLevel == ForceLevel.L2)
+        {
+            abilityLevel = ForceLevel.L3;
+            pat.ChangeLineThickness(1.0f);
+        }
+        else if (abilityLevel == ForceLevel.L3)
+        {
+            abilityLevel = ForceLevel.L1;
+            pat.ChangeLineThickness(0.3f);
+        }
+        else
+        {
+            abilityLevel = ForceLevel.L1;
+            pat.ChangeLineThickness(0.3f);
+        }
+
+        //_powerHUDScript.ChangeAbilityPowerLevel(this.gameObject, targetAbilityLevel);
+    }
+
+    public void OnAOETrigger()
+    {
+        tpc.AnyButtonPressed(gameObject);
+
+        if (!isFiringAoe) PlayPullPushSound();
+
+        isFiringAoe = true;
+
+        pat.OnAOEStart(abilityType);
+
+        UpdateForceType();
+
+        float forceAmount = 0f;
+        if (abilityLevel == ForceLevel.L1) { forceAmount = forceAmount_L1; }
+        if (abilityLevel == ForceLevel.L2) { forceAmount = forceAmount_L2; }
+        if (abilityLevel == ForceLevel.L3) { forceAmount = forceAmount_L3; }
+
+
+        List<GameObject> targetList = pat.GetAoeTargetsList();
+        for (int i = 0; i < targetList.Count; i++)
+        {
+            GameObject _t = targetList[i];
+            if (_t.tag != "MovableObject") continue;
+
+            float dist = Vector3.Distance(transform.position, _t.transform.position);
+            if (dist <= pat.GetTargettingRadius().x) continue;
+
+            Rigidbody targetRB = _t.GetComponent<Rigidbody>();
+
+            Vector3 forceDir = Vector3.Normalize(_t.transform.position - transform.position);
+            Vector3 appliedForce = forceDir * forceAmount * AOEForceAmplifier;
+
+            if (currentAbilityForceType == ForceTypes.Force)
+            {
+                targetRB.AddForce(appliedForce, ForceMode.Force);
+            }
+            else if (currentAbilityForceType == ForceTypes.Impulse)
+            {
+                targetRB.AddForce(appliedForce, ForceMode.Impulse);
+            }
+        }
+    }
+
+    public void OnAOEStop()
+    {
+        pat.OnAOEStop();
+
+        isFiringAoe = false;
+    }
+
+    private void UpdateForceType()
+    {
+        tpc.AnyButtonPressed(gameObject);
+
+        if (abilityLevel == ForceLevel.L1) currentAbilityForceType = forceType_L1;
+        else if (abilityLevel == ForceLevel.L2) currentAbilityForceType = forceType_L2;
+        else if (abilityLevel == ForceLevel.L3) currentAbilityForceType = forceType_L3;
+    }
+
+    /*public void OnAOELevelSwitch()
+    {
+        if (abilityLevel == ForceLevel.L1)
+        {
+            abilityLevel = ForceLevel.L2;
+        }
+        else if (abilityLevel == ForceLevel.L2)
+        {
+            abilityLevel = ForceLevel.L3;
+        }
+        else if (abilityLevel == ForceLevel.L3)
+        {
+            abilityLevel = ForceLevel.L1;
+        }
+        else
+        {
+            abilityLevel = ForceLevel.L1;
+        }
+    }*/
+
+    public void SetPlayerAbility(AbilityType _abilityType)
+    {
+        abilityType = _abilityType;
+        pat.SetLazerColorAccordingToAbility(abilityType);
+        UpdateForceAccordingToAbility();
+    }
+
+    public AbilityType GetPlayerAbility()
+    {
+        return abilityType;
+    }
+
+    private void UpdateForceAccordingToAbility()
+    {
+        if (abilityType == AbilityType.PULL)
+        {
+            playerModelInUse = playerModelPull;
+            playerModelPull.SetActive(true);
+            playerModelPush.SetActive(false);
+
+            forceAmount_L1 = Mathf.Abs(forceAmount_L1) * -1;
+            forceAmount_L2 = Mathf.Abs(forceAmount_L2) * -1;
+            forceAmount_L3 = Mathf.Abs(forceAmount_L3) * -1;
+        }
+        else if (abilityType == AbilityType.PUSH)
+        {
+            playerModelInUse = playerModelPush;
+            playerModelPush.SetActive(true);
+            playerModelPull.SetActive(false);
+
+            forceAmount_L1 = Mathf.Abs(forceAmount_L1);
+            forceAmount_L2 = Mathf.Abs(forceAmount_L2);
+            forceAmount_L3 = Mathf.Abs(forceAmount_L3);
+        }
+    }
+
+    private void PlayPullPushSound()
+    {
+        if (forceAmount_L1 < 0)
+        {
+            SoundManager.PlaySound(SoundType.PULL, null, 0.3f);
+        }
+        else
+        {
+            SoundManager.PlaySound(SoundType.PUSH, null, 0.3f);
+        }
+    }
+}
