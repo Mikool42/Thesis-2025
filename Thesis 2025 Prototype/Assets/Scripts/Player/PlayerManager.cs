@@ -12,6 +12,11 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject playerSpawnCube;
 
+    public void Start()
+    {
+        playerSpawnCube.GetComponent<MeshRenderer>().enabled=false;
+    }
+
     public void OnPlayerJoined()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
