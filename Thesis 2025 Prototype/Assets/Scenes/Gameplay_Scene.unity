@@ -239,7 +239,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3384507747350220370, guid: 557086b7878bdab4abb749c23d831504, type: 3}
       propertyPath: m_Name
-      value: MovableCube (3)
+      value: MovableCubeSmall
       objectReference: {fileID: 0}
     - target: {fileID: 3384507747350220370, guid: 557086b7878bdab4abb749c23d831504, type: 3}
       propertyPath: m_IsActive
@@ -303,11 +303,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8521069524155496837, guid: 557086b7878bdab4abb749c23d831504, type: 3}
       propertyPath: m_Drag
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8521069524155496837, guid: 557086b7878bdab4abb749c23d831504, type: 3}
       propertyPath: m_Mass
-      value: 3
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 8521069524155496837, guid: 557086b7878bdab4abb749c23d831504, type: 3}
       propertyPath: m_Constraints
@@ -1725,9 +1725,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738bd62efc80cb049989ae01d119ab92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceAmount_L1: 40
-  forceAmount_L2: 60
-  forceAmount_L3: 120
+  forceAmount_L1: 440
+  forceAmount_L2: 460
+  forceAmount_L3: 530
 --- !u!1 &92610526
 GameObject:
   m_ObjectHideFlags: 0
@@ -6186,6 +6186,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: c26ce23d807d01e41bb8239f9728eeeb, type: 2}
+    - target: {fileID: 2072787614150442291, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
+      propertyPath: m_Mass
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2161030315161159295, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -6198,6 +6202,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: c26ce23d807d01e41bb8239f9728eeeb, type: 2}
+    - target: {fileID: 2681295737691387098, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681295737691387098, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
+      propertyPath: m_Mass
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3220216668247744446, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
       propertyPath: m_LocalPosition.x
       value: 64.01
@@ -6237,6 +6249,10 @@ PrefabInstance:
     - target: {fileID: 3220216668247744446, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4935031578866469604, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
+      propertyPath: m_Name
+      value: MovableCubeSmall_FixedAxis
       objectReference: {fileID: 0}
     - target: {fileID: 5050744156697187316, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
       propertyPath: m_Name
@@ -6306,6 +6322,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 287bdeeeb37f0db45a6d7266fe10c31e, type: 2}
+    - target: {fileID: 9046926863757394701, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
+      propertyPath: m_Name
+      value: MovableCubeSmall_FixedAxis
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7491461655532820854, guid: c036e7e28ef1899449ba7fde5ec62566, type: 3}
@@ -9818,8 +9838,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceAmount_L1: 60
-  forceAmount_L2: 80
-  forceAmount_L3: 140
+  forceAmount_L2: 140
+  forceAmount_L3: 320
 --- !u!1 &752957409
 GameObject:
   m_ObjectHideFlags: 0
@@ -10920,8 +10940,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceAmount_L1: 60
-  forceAmount_L2: 80
-  forceAmount_L3: 140
+  forceAmount_L2: 140
+  forceAmount_L3: 320
 --- !u!1001 &865921582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13113,6 +13133,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 5d1a3b98dfdf9cf4e938000a232e9084, type: 2}
+    - target: {fileID: 1924605359921810485, guid: c59cf8137afc188449c261109ec51c3d, type: 3}
+      propertyPath: m_Name
+      value: MovableCubeBig_FixedAxis
+      objectReference: {fileID: 0}
     - target: {fileID: 1949256170951311589, guid: c59cf8137afc188449c261109ec51c3d, type: 3}
       propertyPath: m_Drag
       value: 12
@@ -17957,6 +17981,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelDesign_P6 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 150955099177878469, guid: b6d31a5abb55f0645aa5bbdd45a21a8f, type: 3}
+      propertyPath: m_Mass
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673789288019280864, guid: b6d31a5abb55f0645aa5bbdd45a21a8f, type: 3}
+      propertyPath: m_Mass
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1916944889908295859, guid: b6d31a5abb55f0645aa5bbdd45a21a8f, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.699996
@@ -17985,6 +18017,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 249a9ebacb8956e4a9d4f011a66890ce, type: 2}
+    - target: {fileID: 5729346416737891383, guid: b6d31a5abb55f0645aa5bbdd45a21a8f, type: 3}
+      propertyPath: m_Name
+      value: MovableCubeSmall_FixedAxis
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530369630239192082, guid: b6d31a5abb55f0645aa5bbdd45a21a8f, type: 3}
+      propertyPath: m_Name
+      value: MovableCubeSmall_FixedAxis
+      objectReference: {fileID: 0}
     - target: {fileID: 6588625288834622676, guid: b6d31a5abb55f0645aa5bbdd45a21a8f, type: 3}
       propertyPath: m_LocalScale.x
       value: 6.4905696
@@ -19599,8 +19639,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceAmount_L1: 60
-  forceAmount_L2: 80
-  forceAmount_L3: 140
+  forceAmount_L2: 140
+  forceAmount_L3: 320
 --- !u!1 &1772468961
 GameObject:
   m_ObjectHideFlags: 0
@@ -22878,7 +22918,7 @@ Transform:
   m_GameObject: {fileID: 8692040230453508686}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalPosition: {x: 128, y: 3.25, z: 21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
