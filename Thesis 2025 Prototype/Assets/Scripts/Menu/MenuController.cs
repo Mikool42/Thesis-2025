@@ -10,13 +10,13 @@ public class MenuController : MonoBehaviour
     public GameObject mainMenuUI;
     public GameObject settingsMenu;
     public GameObject controlsMenu;
-    //public GameObject levelsMenu;
+    public GameObject checkpointMenu;
 
     [Header("Navigation")]
 
     [SerializeField] private GameObject menuOpenButton;
-    [SerializeField] private GameObject settingsOpenButton, controlsOpenButton;
-    [SerializeField] private GameObject settingsCloseButton, controlsCloseButton;
+    [SerializeField] private GameObject settingsOpenButton, controlsOpenButton, checkpointsOpenButton;
+    [SerializeField] private GameObject settingsCloseButton, controlsCloseButton, checkpointsCloseButton;
 
     public void OnEnable()
     {
@@ -29,7 +29,7 @@ public class MenuController : MonoBehaviour
         mainMenuUI.SetActive(true);
         settingsMenu.SetActive(false);
         controlsMenu.SetActive(false);
-        //levelsMenu.SetActive(false);
+        checkpointMenu.SetActive(false);
 
         GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in _players)
@@ -46,7 +46,7 @@ public class MenuController : MonoBehaviour
         mainMenuUI.SetActive(false);
         settingsMenu.SetActive(false);
         controlsMenu.SetActive(false);
-        //levelsMenu.SetActive(false);
+        checkpointMenu.SetActive(false);
 
         GameObject[] _players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject p in _players)
@@ -55,12 +55,29 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    public void EnterCheckpoints()
+    {
+        mainMenuUI.SetActive(false);
+        settingsMenu.SetActive(false);
+        controlsMenu.SetActive(false);
+        checkpointMenu.SetActive(true);
+
+        SetSelectedButton(checkpointsOpenButton);
+    }
+
+    public void ExitCheckpoints()
+    {
+        OnMenuEnter();
+
+        SetSelectedButton(checkpointsCloseButton);
+    }
+
     public void EnterSettings()
     {
         mainMenuUI.SetActive(false);
         settingsMenu.SetActive(true);
         controlsMenu.SetActive(false);
-        //levelsMenu.SetActive(false);
+        checkpointMenu.SetActive(false);
 
         SetSelectedButton(settingsOpenButton);
     }
@@ -77,7 +94,7 @@ public class MenuController : MonoBehaviour
         mainMenuUI.SetActive(false);
         settingsMenu.SetActive(false);
         controlsMenu.SetActive(true);
-        //levelsMenu.SetActive(false);
+        checkpointMenu.SetActive(false);
 
         SetSelectedButton(controlsOpenButton);
     }
