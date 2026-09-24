@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using SmallHedge.SoundManager;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.iOS;
 
 
 public class MenuController : MonoBehaviour
@@ -17,6 +18,11 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject menuOpenButton;
     [SerializeField] private GameObject settingsOpenButton, controlsOpenButton, checkpointsOpenButton;
     [SerializeField] private GameObject settingsCloseButton, controlsCloseButton, checkpointsCloseButton;
+
+    [Header("Checkpoints")]
+
+    [SerializeField] private GameObject[] checkpoints;
+    
 
     public void OnEnable()
     {
